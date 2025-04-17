@@ -7,7 +7,7 @@
   </head>
   <body>
     <header>Todo-AE.0</header>
-    <div id="content">
+    <main id="content">
       <dialog id="todoDialog">
         <form action="dialog" id="todoForm">
           <div class="form-group">
@@ -23,13 +23,35 @@
             <input type="date", id="dueDate" name="dueDate" />
           </div>
           <div class="form-group">
-            <select name="priority" id="priority">Priority</select>
+            <label for="priority">Priority</label>
+            <select name="priority" id="priority" >
             <option value="low">Low</option>
             <option value="medium">Medium</option>
             <option value="high">High</option>
-          </div>         
+          </select>
+          </div>   
+          <button type="submit">Send</button>      
         </form>
       </dialog>
-    </div>
+
+      <dialog id="projectDialog" >
+        <form action="dialog" id="projectForm">
+
+          <div class="form-group">
+            <label for="projectName">Project Name</label>
+            <input type="text" name="projectName" id="projectName">
+          </div>
+
+          <button type="submit">Send</button>      
+
+        </form>
+      </dialog>
+      <aside id="sidebar">
+        
+      </aside>
+      <div class="todo-container">
+
+      </div>
+    </main>
   </body>
 </html>

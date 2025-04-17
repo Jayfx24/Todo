@@ -1,6 +1,8 @@
 import './style.css'
-import todoItem from './tasks'
+import formInit from './tasks'
+import projectInit from './projects';
 import { compareAsc, format } from "date-fns";
 
 
-
+formInit()
+projectInit()
