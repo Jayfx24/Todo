@@ -8,6 +8,7 @@ const todoForm = document.getElementById('todoForm')
 const todoItem = function (title,desc,dueDate,priority,projectType = 'default'){
     const date = new Date();
     const createdAt = format(date, 'yyyy-MM-dd HH:mm:ss');
+    
     const uuid = crypto.randomUUID();
     const status = false
 
@@ -41,8 +42,8 @@ function formInit(){
 
 
 const testTodos = [
-    todoItem("Buy groceries", "Get milk, eggs, and bread", "2025-04-20", "High"),
-    todoItem("Finish project", "Complete the Odin Project assignment", "2025-04-21", "High"),
+    todoItem("Buy groceries", "Get milk, eggs, and bread", "2025-04-18", "High"),
+    todoItem("Finish project", "Complete the Odin Project assignment", "2025-04-18", "High"),
     todoItem("Read book", "Read 30 pages of 'Atomic Habits'", "2025-04-22", "Medium"),
     todoItem("Call mom", "Weekly check-in call", "2025-04-19", "Low", "Family"),
     todoItem("Workout", "Gym session: chest and triceps", "2025-04-20", "Medium", )
