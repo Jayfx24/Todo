@@ -19,12 +19,45 @@ body{
 }
 
 header{
-
-text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid ;
+  height: 3rem;
+  padding: 15px;
 }
 
 main{
-  
+  width: 100%;
+  height: 100vh;
+  border: 1px solid;
+  display: flex;
 
 }
 
+
+#sidebar{
+  width: 200px;
+  height: auto;
+  border: 1px solid;
+  padding: 10px;
+}
+
+ul{
+  list-style:none;
+  /* border: 1px solid black; */
+}
+
+.sidebar_item{
+  margin-bottom: 10px;
+}
+.sidebar_button{
+  border: 0;
+  background-color: inherit;
+  cursor: pointer;
+}
+.todo-container{
+  flex: 1;
+  border: 1px solid;
+
+}

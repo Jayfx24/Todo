@@ -1,57 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Todo-AE.O</title>
-  </head>
-  <body>
-    <header>Todo-AE.0</header>
-    <main id="content">
-      <dialog id="todoDialog">
-        <form action="dialog" id="todoForm">
-          <div class="form-group">
-            <label for="title">Title</label>
-            <input type="text", id="title" name="title" />
-          </div>
-          <div class="form-group">
-            <label for="desc"> Description </label>
-            <input type="text", id="desc" name="desc" />
-          </div>
-          <div class="form-group">
-            <label for=dueDate""> Due Date</label>
-            <input type="date", id="dueDate" name="dueDate" />
-          </div>
-          <div class="form-group">
-            <label for="priority">Priority</label>
-            <select name="priority" id="priority" >
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Todo-AE.O</title>
+</head>
+
+<body>
+  <header>Todo-AE.0</header>
+  <main id="content">
+    <dialog id="todoDialog">
+      <form action="dialog" id="todoForm">
+        <div class="form-group">
+          <label for="title">Title</label>
+          <input type="text" , id="title" name="title" />
+        </div>
+        <div class="form-group">
+          <label for="desc"> Description </label>
+          <input type="text" , id="desc" name="desc" />
+        </div>
+        <div class="form-group">
+          <label for=dueDate""> Due Date</label>
+          <input type="date" , id="dueDate" name="dueDate" />
+        </div>
+        <div class="form-group">
+          <label for="priority">Priority</label>
+          <select name="priority" id="priority">
             <option value="low">Low</option>
             <option value="medium">Medium</option>
             <option value="high">High</option>
           </select>
-          </div>   
-          <button type="submit">Send</button>      
-        </form>
-      </dialog>
+        </div>
+        <button type="submit">Send</button>
+      </form>
+    </dialog>
 
-      <dialog id="projectDialog" >
-        <form action="dialog" id="projectForm">
+    <dialog id="projectDialog">
+      <form action="dialog" id="projectForm">
 
-          <div class="form-group">
-            <label for="projectName">Project Name</label>
-            <input type="text" name="projectName" id="projectName">
-          </div>
+        <div class="form-group">
+          <label for="projectName">Project Name</label>
+          <input type="text" name="projectName" id="projectName">
+        </div>
 
-          <button type="submit">Send</button>      
+        <button type="submit">Send</button>
 
-        </form>
-      </dialog>
-      <aside id="sidebar">
-        
-      </aside>
-      <div class="todo-container">
+      </form>
+    </dialog>
+    <aside id="sidebar">
+      <ul class="sidebar-nav">
+        <li class="sidebar_item">
+          <button class="sidebar_button" id="tasks">Tasks</button>
+        </li>
+        <li class="sidebar_item">
+          <button class="sidebar_button" id="today">Today</button>
+        </li>
+        <li class="sidebar_item">
+          <button class="sidebar_button" id="weekly">This Week</button>
+        </li>
+        <li class="sidebar_item"
+        ><button class="sidebar_button" id="allTask">All Tasks</button>
+      </li>
 
-      </div>
-    </main>
-  </body>
+      </ul>
+    </aside>
+
+    <div class="todo-container">
+
+    </div>
+  </main>
+</body>
+
 </html>
