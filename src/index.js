@@ -1,10 +1,31 @@
 import './style.css'
-import formInit from './tasks'
+import {testTodos} from './tasks'
 import projectInit from './projects';
-import displayAllInit from './displayAll';
-import { compareAsc, format } from "date-fns";
+import {displayTasks} from './displayAll';
+import { todayTask,weekTask, upcomingTask, allTasks } from './taskfilter';
 
+const todoContainer = document.querySelector('.todo-container')
+const sideNavBtns = document.querySelector('.sidebar-nav')
 
-formInit()
-projectInit()
-displayAllInit()
+todoContainer.classList.add('todo-items')
+    
+sideNavBtns.addEventListener('click',(e)=>{
+    switch (e.target.id){
+        case 'tasks':
+            allTasks(testTodos);
+            break;
+        
+        case 'today':
+            todayTask(testTodos);
+            break;
+        case 'week':
+            weekTask(testTodos);
+            break;
+        
+        case 'upcoming':
+            upcomingTask(testTodos);
+            break;
+                                
+
+    }
+})
