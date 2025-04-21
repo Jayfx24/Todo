@@ -35,6 +35,11 @@ main{
 
 }
 
+button{
+  border: 0;
+  background-color: inherit;
+  cursor: pointer;
+}
 
 #sidebar{
   width: 200px;
@@ -52,9 +57,7 @@ ul{
   margin-bottom: 10px;
 }
 .sidebar_button{
-  border: 0;
-  background-color: inherit;
-  cursor: pointer;
+ 
 }
 .todo-container{
   flex: 1;

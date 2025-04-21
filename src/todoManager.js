@@ -1,6 +1,8 @@
+import { allTask } from "./tasks"
 
 
 export function displayTasks(items){
+    
     const todoItems = document.querySelector('.todo-items')
     todoItems.innerHTML= ''
 

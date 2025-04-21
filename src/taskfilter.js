@@ -1,5 +1,5 @@
 import { getToday, getEndOfWeek, getStartOfWeek } from './dateUtility';
-import { displayTasks } from './displayAll';
+import { displayTasks } from './todoManager';
 
 
 export function todayTask(items){

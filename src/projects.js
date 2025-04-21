@@ -1,6 +1,6 @@
 import { getToday } from "./dateUtility";
-
-const projectForm = document.getElementById('projectForm')
+import { displayProjects } from "./projectsManager";
+const projectForm = document.getElementById('projectForm');
 const allProjects = []
 
 const newProject = function(projectName){
@@ -20,8 +20,14 @@ projectForm.addEventListener('submit',(e)=>{
 
     allProjects.push(newProject(projectName));
     console.log(allProjects)
+    displayProjects()
     
 })
 
+// projectUl.addEventListener('click',()=>{
 
+//     // should show/hide projects else show no project, click here to create one
+// })
+
+export {newProject,allProjects}
 

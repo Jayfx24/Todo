@@ -1,31 +1,33 @@
 import './style.css'
-import {testTodos} from './tasks'
-import projectInit from './projects';
-import {displayTasks} from './displayAll';
+import {testTodos} from '/data/testTodos'
+import { displayProjects } from './projectsManager';
 import { todayTask,weekTask, upcomingTask, allTasks } from './taskfilter';
+import { allTask } from './tasks';
 
 const todoContainer = document.querySelector('.todo-container')
 const sideNavBtns = document.querySelector('.sidebar-nav')
+allTask.push(...testTodos)
 
 todoContainer.classList.add('todo-items')
     
 sideNavBtns.addEventListener('click',(e)=>{
     switch (e.target.id){
         case 'tasks':
-            allTasks(testTodos);
+            allTasks(allTask);
             break;
         
         case 'today':
-            todayTask(testTodos);
+            todayTask(allTask);
             break;
         case 'week':
-            weekTask(testTodos);
+            weekTask(allTask);
             break;
         
         case 'upcoming':
-            upcomingTask(testTodos);
+            upcomingTask(allTask);
             break;
                                 
 
     }
 })
+displayProjects()
