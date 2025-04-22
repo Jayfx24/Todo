@@ -1,4 +1,4 @@
-import {testProjectsData} from '/data/testProjects';
+import {testProjectsData} from './data/testProjects';
 import { allProjects } from './projects';
 
 const projectUl = document.querySelector('.project-list');
@@ -16,6 +16,8 @@ function createProjects(items){
         const li = document.createElement('li');
         const btn = document.createElement('button');
         btn.textContent = `${pj['projectName']}`
+
+        li.className = 'project-nav-item'
 
         li.appendChild(btn)
         projectUl.appendChild(li)

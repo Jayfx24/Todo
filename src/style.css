@@ -1,7 +1,15 @@
-:root{
+:root {
+  /* Borders */
+  --border-width: 1px;
+  --border-style: solid;
+  --border-color: black;
+  --border: var(--border-width) var(--border-style) var(--border-color);
 
+  /* Border radius */
+  --border-radius-sm: 4px;
+  --border-radius: 8px;
+  --border-radius-lg: 16px;
 }
-
 
 
 *{
@@ -41,31 +49,67 @@ button{
   cursor: pointer;
 }
 
-#sidebar{
-  width: 200px;
-  height: auto;
-  border: 1px solid;
-  padding: 10px;
-}
-
 ul{
   list-style:none;
   /* border: 1px solid black; */
 }
+#sidebar{
+  width: 200px;
+  height: auto;
+  border: 1px solid;
+  /* color: white; */
+  padding: 10px;
+  background-color: navy;
+  display: flex;
+  flex-direction: column;
+  
+}
 
-.sidebar_item{
+#sidebar > * {
+  border: 1px solid white;
+  /* text-align: center; */
+}
+
+.todo-nav{
+  flex: 1;
+}
+.project-nav{
+
+  flex: 2;
+}
+
+.sidebar_item, .project-nav-item{
   margin-bottom: 10px;
 }
 .sidebar_button{
  
 }
-.todo-container{
+.main-content{
   flex: 1;
   border: 1px solid;
 
 }
 
+.add-todo{
+  /* border: var(--border); */
+  /* margin-bottom: ; */
+  padding: 0.4rem 0.4rem;
+  text-align: right;
+}
+#addTodo{
+  border: var(--border);
+  padding: 0.5rem 1rem;
+  border-radius: var(--border-radius);
+}
+
 .todo-item{
   border: 1px solid;
   margin-bottom: 20px;
+}
+
+/* dialogs */
+#todoDialog{
+  margin: auto;
+  /* padding: initial; */
+  
 }
