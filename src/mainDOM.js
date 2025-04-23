@@ -52,6 +52,7 @@ export function formFuc(ele) {
   projectTypeGroup.className = "form-group project-type";
 
   const select = document.createElement("select");
+  select.name = 'project'
 
   allProjects.forEach((item) => {
       const option = document.createElement("option");
@@ -100,4 +101,29 @@ export function formFuc(ele) {
 
   
   ele.appendChild(form);
+}
+
+// 
+
+
+export function projectForm(ele) {
+  const form = document.createElement("form");
+  form.id = "todoForm";
+
+  const titleGroup = document.createElement("div");
+  titleGroup.className = "form-group";
+  const titleLabel = document.createElement("label");
+  titleLabel.setAttribute("for", "title");
+  titleLabel.textContent = "Project Name";
+  const titleInput = document.createElement("input");
+  titleInput.type = "text";
+  titleInput.id = "projectFormName";
+  titleInput.name = "projectFormName";
+  titleInput.required = true;
+  titleGroup.appendChild(titleLabel);
+  titleGroup.appendChild(titleInput);
+  
+  form.appendChild(titleGroup);
+  ele.appendChild(form)
+
 }

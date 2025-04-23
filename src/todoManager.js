@@ -1,6 +1,6 @@
 import { allTask } from "./tasks"
 import { setView } from "./statusChecker"
-import { todayTask,weekTask, upcomingTask, allTodoTasks } from './taskfilter';
+import { todayTask,weekTask, upcomingTask, allTodoTasks } from './contentFilter';
 import { todoItem } from "./tasks";
 import { getCurrentView } from "./statusChecker";
 
@@ -43,10 +43,6 @@ function createTodoDOM(items,todoItems){
 
 export function filterByView(targetId){
     switch (targetId){
-        case 'tasks':
-            setView('default')
-            allTodoTasks(allTask);
-            break;
         
         case 'today':
             setView('today')
@@ -61,13 +57,18 @@ export function filterByView(targetId){
             setView('upcoming')
             upcomingTask(allTask);
             break;
-                                
+                                     
+        default:
+            allTodoTasks(allTask);
+            break;
 
     }
 }
 
 
 export function getAddForm(){
+    const todoForm = document.getElementById('todoForm')
+
     todoForm.addEventListener('submit',(e)=>{
         e.preventDefault()
         formData = new FormData(todoForm);
@@ -76,8 +77,10 @@ export function getAddForm(){
         let desc = formData.get('desc');
         let dueDate = formData.get('dueDate');
         let priority = formData.get('priority');
+        let project = formData.get('project');
         
-        const newItem = todoItem(title,desc,dueDate,priority)
+        
+        const newItem = todoItem(title,desc,dueDate,priority,project)
         
         allTask.push(newItem)
         const view = getCurrentView()

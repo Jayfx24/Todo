@@ -117,7 +117,7 @@ li button{
   padding: 0.4rem 0.4rem;
   text-align: right;
 }
-#addTodo{
+#addTodo, #addProject{
   border: var(--border);
   padding: 0.5rem 1rem;
   border-radius: var(--border-radius);

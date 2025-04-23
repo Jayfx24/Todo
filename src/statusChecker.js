@@ -1,4 +1,4 @@
-export let currentView = 'default'
+export let currentView = 'all'
 
 
 export function setView(view){

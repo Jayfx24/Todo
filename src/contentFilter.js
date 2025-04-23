@@ -1,6 +1,7 @@
 import { getToday, getEndOfWeek, getStartOfWeek } from './dateUtility';
 import { displayTodo } from './todoManager';
 
+
 export function todayTask(items){
     const today = getToday()
     const todayArr = items.filter(item => item['dueDate'] === today)
@@ -23,4 +24,12 @@ export function upcomingTask(items){
 
 export function allTodoTasks(items){
     displayTodo(items)
+    console.log('working')
+}
+
+
+export function projectFilter(items,name){
+    const projectTodos = items.filter(item => item['pt'] === name);
+    displayTodo(projectTodos)
+
 }
