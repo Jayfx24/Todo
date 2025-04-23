@@ -1,28 +1,26 @@
-import {testProjectsData} from './data/testProjects';
-import { allProjects } from './projects';
+import { testProjectsData } from "./data/testProjects";
+import { allProjects } from "./projects";
 
-const projectUl = document.querySelector('.project-list');
-
-allProjects.push(...testProjectsData)
-export function displayProjects(){
-    createProjects(allProjects)
+const projectUl = document.querySelector(".project-list");
+const todoForm = document.getElementById("todoForm");
+allProjects.push(...testProjectsData);
+export function displayProjects() {
+  createProjects(allProjects);
 }
 
-function createProjects(items){
-    projectUl.innerHTML = '';
-    
-    for (const pj of items){
-        console.log(pj)
-        const li = document.createElement('li');
-        const btn = document.createElement('button');
-        btn.textContent = `${pj['projectName']}`
+function createProjects(items) {
+  projectUl.innerHTML = "";
 
-        li.className = 'project-nav-item'
+  for (const pj of items) {
+    console.log(pj);
+    const li = document.createElement("li");
+    const btn = document.createElement("button");
+    btn.textContent = `${pj["projectName"]}`;
 
-        li.appendChild(btn)
-        projectUl.appendChild(li)
+    li.className = "project-nav-item";
 
-    }
-
-
+    li.appendChild(btn);
+    projectUl.appendChild(li);
+  }
 }
+

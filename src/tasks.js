@@ -5,7 +5,7 @@ import {getToday } from "./dateUtility";
 const allTask = []
 const todoForm = document.getElementById('todoForm')
 
-const todoItem = function (title,desc,dueDate,priority,projectType = 'default'){
+const todoItem = function (title,desc,dueDate,priority,projectType){
     const createdAt = getToday();
     const uuid = crypto.randomUUID();
     const status = false
@@ -15,20 +15,6 @@ const todoItem = function (title,desc,dueDate,priority,projectType = 'default'){
 };
 
 
-let formData;
-todoForm.addEventListener('submit',(e)=>{
-    e.preventDefault()
-    formData = new FormData(todoForm);
-
-    let title = formData.get('title');
-    let desc = formData.get('desc');
-    let dueDate = formData.get('dueDate');
-    let priority = formData.get('priority');
-    
-    
-    allTask.push(todoItem(title,desc,dueDate,priority))
-    console.table(allTask);
-})
 
 
 export {allTask}

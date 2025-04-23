@@ -9,8 +9,25 @@
   --border-radius-sm: 4px;
   --border-radius: 8px;
   --border-radius-lg: 16px;
-}
 
+  /* Dialog */
+  --spacing : 1rem;
+  --dialog-font-size: 1.25rem;
+  --dialog-btns-padding : 0.5rem 1rem;
+
+    /* Font Sizes */
+    --font-size: 1rem;
+    --font-size-md: 1.25rem; 
+    --font-size-large: 1.5rem; 
+    
+    --heading-font-size: 1.25rem; 
+    --body-font-size: 1rem; 
+    --input-font-size: 1rem; 
+    --button-font-size: 1rem; 
+
+    /* input  */
+  --input-padding : 0.25rem;
+  }
 
 *{
   box-sizing: border-box;
@@ -59,12 +76,16 @@ ul{
   border: 1px solid;
   /* color: white; */
   padding: 10px;
-  background-color: navy;
+  /* background-color: navy; */
   display: flex;
   flex-direction: column;
   
+  
 }
+li button{
+  font-size: var(--font-size);
 
+}
 #sidebar > * {
   border: 1px solid white;
   /* text-align: center; */
@@ -109,7 +130,36 @@ ul{
 
 /* dialogs */
 #todoDialog{
-  margin: auto;
-  /* padding: initial; */
+ margin: auto;
+ padding: 1rem;
+ width: 400px;
+  
+  
+}
+
+#todoForm{
+
+}
+
+.form-group{
+  /* border: var(--border); */
+  margin-bottom: var(--spacing);
+  font-size: var(--dialog-font-size);
+}
+
+.form-group > * {
+  display: block;
+}
+
+.form-group > *{
+  padding: var(--input-padding);
+  width: 100%;
+  font-size: var(--font-size);
+}
+
+#todoForm > button{
+  border: var(--border);
+  padding: var(--dialog-btns-padding);
+  background-color: blueviolet;
   
 }

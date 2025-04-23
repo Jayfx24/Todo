@@ -1,31 +1,17 @@
 
-import { todayTask,weekTask, upcomingTask, allTasks } from '../taskfilter';
 import { allTask } from '../tasks';
 import {testTodos} from '../data/testTodos'
-
-
+import { setView } from '../statusChecker';
+import { filterByView } from '../todoManager';
 const sideNavBtns = document.querySelector('.sidebar-nav')
 allTask.push(...testTodos)
 
 
 export function sideNavInit(){
     sideNavBtns.addEventListener('click',(e)=>{
-    switch (e.target.id){
-        case 'tasks':
-            allTasks(allTask);
-            break;
-        
-        case 'today':
-            todayTask(allTask);
-            break;
-        case 'week':
-            weekTask(allTask);
-            break;
-        
-        case 'upcoming':
-            upcomingTask(allTask);
-            break;
-                                
-
-    }
+        let targetId = e.target.id;
+        filterByView(targetId)
+   
 })}
+
+

@@ -1,28 +1,26 @@
 import { getToday, getEndOfWeek, getStartOfWeek } from './dateUtility';
-import { displayTasks } from './todoManager';
-
+import { displayTodo } from './todoManager';
 
 export function todayTask(items){
     const today = getToday()
     const todayArr = items.filter(item => item['dueDate'] === today)
-    displayTasks(todayArr)
+    displayTodo(todayArr)
 }
 
 export function weekTask(items){
     const endOfWeekDate = getEndOfWeek();
     const startOfWeekDate = getStartOfWeek();
     const weekArr = items.filter(item => item['dueDate'] <= endOfWeekDate && item['dueDate'] >= startOfWeekDate)
-    displayTasks(weekArr)
+    displayTodo(weekArr)
 }
 
 export function upcomingTask(items){
     const endOfWeekDate = getEndOfWeek();
-    console.log(endOfWeekDate)
     const upcomingArr = items.filter(item => item['dueDate'] > endOfWeekDate)
-    displayTasks(upcomingArr)
+    displayTodo(upcomingArr)
 }
 
 
-export function allTasks(items){
-    displayTasks(items)
+export function allTodoTasks(items){
+    displayTodo(items)
 }
