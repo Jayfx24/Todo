@@ -1,8 +1,8 @@
-import { allTask } from "./tasks"
-import { setView } from "./statusChecker"
-import { todayTask,weekTask, upcomingTask, allTodoTasks } from './contentFilter';
-import { todoItem } from "./tasks";
-import { getCurrentView } from "./statusChecker";
+import { allTask } from "../todos"
+import { setView } from "../statusChecker"
+import { todayTask,weekTask, upcomingTask, allTodoTasks } from '../contentFilter';
+import { todoItem } from "../todos";
+import { getCurrentView } from "../statusChecker";
 
 
 const todoItems = document.querySelector('.todo-container')

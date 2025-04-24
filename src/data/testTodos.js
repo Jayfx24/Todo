@@ -1,4 +1,4 @@
-import { todoItem } from "../tasks";
+import { todoItem } from "../todos";
 
 
 export const testTodos = [

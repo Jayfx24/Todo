@@ -1,19 +1,17 @@
 import "./style.css";
-import { displayProjects } from "./projectsManager";
+import { displayProjects } from "./contentManagers/projectsManager";
 import {  initSideNav } from "./nav/sideNavs";
-import { initBtns } from "./buttons/dialogButton";
+import { initBtns } from "./contentManagers/dialogManager";
 import { allTodoTasks } from "./contentFilter";
-import { allTask } from "./tasks";
-import { setView } from "./statusChecker";
+import { allTask } from "./todos";
 
 function app() {
-  initSideNav()
-  // sideNavInit();
+  initSideNav();
   displayProjects();
   initBtns();
   allTodoTasks(allTask);
 }
 
-app()
+app();
 
-// work on project dialog
+// work on overdue, completed and indicate if there is not task for the time period

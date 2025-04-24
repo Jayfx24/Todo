@@ -129,7 +129,7 @@ li button{
 }
 
 /* dialogs */
-#todoDialog{
+#todoDialog,#projectDialog{
  margin: auto;
  padding: 1rem;
  width: 400px;

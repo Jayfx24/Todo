@@ -1,9 +1,7 @@
 import {getToday } from "./dateUtility";
 
-// project type
 
 const allTask = []
-
 const todoItem = function (title,desc,dueDate,priority,projectType){
     const createdAt = getToday();
     const uuid = crypto.randomUUID();
@@ -14,16 +12,4 @@ const todoItem = function (title,desc,dueDate,priority,projectType){
     return{title,desc,dueDate,priority,status,uuid,createdAt,pt};
 };
 
-
-
-
-export {allTask}
-
-
-
-
-
-
-  
-
-export {todoItem};
+export {allTask, todoItem};

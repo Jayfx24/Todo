@@ -1,22 +1,22 @@
 import { allProjects } from "./projects";
 
-export function formFuc(ele) {
+export function createTodoForm(ele) {
   const form = document.createElement("form");
   form.id = "todoForm";
 
   // Title
-  const titleGroup = document.createElement("div");
-  titleGroup.className = "form-group";
-  const titleLabel = document.createElement("label");
-  titleLabel.setAttribute("for", "title");
-  titleLabel.textContent = "Title";
+  const projectGroup = document.createElement("div");
+  projectGroup.className = "form-group";
+  const projectLabel = document.createElement("label");
+  projectLabel.setAttribute("for", "title");
+  projectLabel.textContent = "Title";
   const titleInput = document.createElement("input");
   titleInput.type = "text";
   titleInput.id = "title";
   titleInput.name = "title";
   titleInput.required = true;
-  titleGroup.appendChild(titleLabel);
-  titleGroup.appendChild(titleInput);
+  projectGroup.appendChild(projectLabel);
+  projectGroup.appendChild(titleInput);
 
   // Description
   const descGroup = document.createElement("div");
@@ -91,7 +91,7 @@ export function formFuc(ele) {
   submitButton.textContent = "Send";
 
   // Append all to form
-  form.appendChild(titleGroup);
+  form.appendChild(projectGroup);
   form.appendChild(projectTypeGroup);
   form.appendChild(descGroup);
   form.appendChild(dueDateGroup);
@@ -103,27 +103,35 @@ export function formFuc(ele) {
   ele.appendChild(form);
 }
 
-// 
 
 
-export function projectForm(ele) {
+
+export function createProjectForm(ele) {
   const form = document.createElement("form");
-  form.id = "todoForm";
+  form.id = "projectForm";
 
-  const titleGroup = document.createElement("div");
-  titleGroup.className = "form-group";
-  const titleLabel = document.createElement("label");
-  titleLabel.setAttribute("for", "title");
-  titleLabel.textContent = "Project Name";
-  const titleInput = document.createElement("input");
-  titleInput.type = "text";
-  titleInput.id = "projectFormName";
-  titleInput.name = "projectFormName";
-  titleInput.required = true;
-  titleGroup.appendChild(titleLabel);
-  titleGroup.appendChild(titleInput);
+  const projectGroup = document.createElement("div");
+  projectGroup.className = "form-group";
+  const projectLabel = document.createElement("label");
+  projectLabel.setAttribute("for", "projectFormName");
+  projectLabel.textContent = "Project Name";
+  const projectInput = document.createElement("input");
+  projectInput.type = "text";
+  projectInput.id = "projectFormName";
+  projectInput.name = "projectFormName";
+  projectInput.required = true;
+  projectGroup.appendChild(projectLabel);
+  projectGroup.appendChild(projectInput);
   
-  form.appendChild(titleGroup);
-  ele.appendChild(form)
+   // Submit Button
+   const submitButton = document.createElement("button");
+   submitButton.type = "submit";
+   submitButton.textContent = "Create new project :)";
+
+  form.appendChild(projectGroup);
+  form.appendChild(submitButton);
+  ele.appendChild(form);
+
+  
 
 }

@@ -1,8 +1,8 @@
 
-import { allTask } from '../tasks';
+import { allTask } from '../todos';
 import {testTodos} from '../data/testTodos'
 import { setView } from '../statusChecker';
-import { filterByView } from '../todoManager';
+import { filterByView } from '../contentManagers/todoManager';
 allTask.push(...testTodos)
 
 const aside = document.querySelector('#sidebar')

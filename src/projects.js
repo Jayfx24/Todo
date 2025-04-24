@@ -1,5 +1,5 @@
 import { getToday } from "./dateUtility";
-import { displayProjects } from "./projectsManager";
+import { displayProjects } from "./contentManagers/projectsManager";
 const projectForm = document.getElementById('projectForm');
 const allProjects = []
 
@@ -11,18 +11,18 @@ const newProject = function(projectName){
 }
 
 
-projectForm.addEventListener('submit',(e)=>{
-    e.preventDefault()
+// projectForm.addEventListener('submit',(e)=>{
+//     e.preventDefault()
 
-    const formData = new FormData(projectForm)
+//     const formData = new FormData(projectForm)
 
-    const projectName = formData.get('projectName');
+//     const projectName = formData.get('projectName');
 
-    allProjects.push(newProject(projectName));
-    console.log(allProjects)
-    displayProjects()
+//     allProjects.push(newProject(projectName));
+//     console.log(allProjects)
+//     displayProjects()
     
-})
+// })
 
 // projectUl.addEventListener('click',()=>{
 

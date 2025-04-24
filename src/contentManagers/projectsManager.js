@@ -1,17 +1,21 @@
-import { it } from "date-fns/locale";
-import { testProjectsData } from "./data/testProjects";
-import { allProjects } from "./projects";
-import { allTask } from "./tasks";
-import { projectFilter } from "./contentFilter";
+import { testProjectsData } from "../data/testProjects";
+import { allProjects } from "../projects";
+import { allTask } from "../todos";
+import { projectFilter } from "../contentFilter";
+import { newProject } from "../projects";
+
 
 
 const aside = document.querySelector('#sidebar')
 const projectNav = document.createElement('div');
-projectNav.className = 'project-nav';
 const projectUl = document.createElement('ul')
+
+projectNav.className = 'project-nav';
 projectUl.className = 'project-list'
-const todoContainer = document.querySelector(".todo-container");
+
 allProjects.push(...testProjectsData);
+
+
 export function displayProjects() {
   createProjects(allProjects);
 }
@@ -46,3 +50,27 @@ projectUl.addEventListener('click',(e) =>{
   
   
 })
+
+export function getProjectForm(){
+  console.log('here')
+
+  const pf = document.getElementById('projectForm')
+  const pd = document.getElementById('projectDialog')
+
+  pf.addEventListener('submit',(e)=>{
+    e.preventDefault()
+
+    const formData = new FormData(pf)
+
+    const pName = formData.get('projectFormName')
+
+    allProjects.push(newProject(pName));
+    console.log(allProjects)
+    displayProjects()
+
+    pf.reset()
+    pd.close()
+    })
+
+    
+}
