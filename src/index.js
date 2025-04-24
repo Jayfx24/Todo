@@ -14,4 +14,5 @@ function app() {
 
 app();
 
-// work on overdue, completed and indicate if there is not task for the time period
+// work on overdue,update project in form to match current project - DONE
+// completed and indicate if there is not task for the time period

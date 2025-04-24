@@ -1,4 +1,6 @@
 import { allProjects } from "./projects";
+import { getProjectCurrentView } from "./statusChecker";
+
 
 export function createTodoForm(ele) {
   const form = document.createElement("form");
@@ -54,10 +56,12 @@ export function createTodoForm(ele) {
   const select = document.createElement("select");
   select.name = 'project'
 
-  allProjects.forEach((item) => {
+  const updatedArr = currPView(allProjects)
+  console.log(updatedArr)
+  updatedArr.forEach((item) => {
       const option = document.createElement("option");
-      const name = item.projectName;
-      option.value = name.toLowerCase();;
+      const name = item.name;
+      option.value = name;
       option.textContent = name.toUpperCase();
 
       select.appendChild(option);
@@ -134,4 +138,11 @@ export function createProjectForm(ele) {
 
   
 
+}
+
+function currPView(allProjects){
+  const view = getProjectCurrentView().toLowerCase()
+  const updatedArr = [allProjects.find(item => item['name'] === view),...allProjects.filter(item => item['name'] != view)];
+  console.log(updatedArr)
+  return updatedArr;
 }

@@ -1,6 +1,5 @@
 import { allTask } from "../todos"
-import { setView } from "../statusChecker"
-import { todayTask,weekTask, upcomingTask, allTodoTasks } from '../contentFilter';
+import { filterByView } from "../contentFilter";
 import { todoItem } from "../todos";
 import { getCurrentView } from "../statusChecker";
 
@@ -41,29 +40,7 @@ function createTodoDOM(items,todoItems){
 
 
 
-export function filterByView(targetId){
-    switch (targetId){
-        
-        case 'today':
-            setView('today')
-            todayTask(allTask);
-            break;
-        case 'week':
-            setView('week')
-            weekTask(allTask);
-            break;
-        
-        case 'upcoming':
-            setView('upcoming')
-            upcomingTask(allTask);
-            break;
-                                     
-        default:
-            allTodoTasks(allTask);
-            break;
 
-    }
-}
 
 
 export function getAddForm(){

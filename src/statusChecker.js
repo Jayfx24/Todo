@@ -8,3 +8,17 @@ export function setView(view){
 export function getCurrentView(){
     return currentView;
 }
+
+
+let currentProjectView = 'personal'
+
+export function setProjectView(view){
+    currentProjectView = view;
+    console.log(currentProjectView);
+
+
+} 
+
+export function getProjectCurrentView(){
+    return currentProjectView;
+}

@@ -3,7 +3,7 @@ import { allProjects } from "../projects";
 import { allTask } from "../todos";
 import { projectFilter } from "../contentFilter";
 import { newProject } from "../projects";
-
+import { setProjectView } from "../statusChecker";
 
 
 const aside = document.querySelector('#sidebar')
@@ -27,8 +27,8 @@ function createProjects(items) {
     console.log(pj);
     const li = document.createElement("li");
     const btn = document.createElement("button");
-    btn.textContent = `${pj["projectName"]}`;
-    btn.name = `${pj["projectName"].toLowerCase()}`;
+    btn.textContent = `${pj["name"].toUpperCase()}`;
+    btn.name = `${pj["name"].toLowerCase()}`;
     li.className = "project-nav-item";
 
     li.appendChild(btn);
@@ -44,7 +44,7 @@ projectUl.addEventListener('click',(e) =>{
   if (e.target.tagName === 'BUTTON'){
 
     const pName = e.target.name;
-    console.log(pName);
+    setProjectView(pName);
     projectFilter(allTask,pName);
   }
   

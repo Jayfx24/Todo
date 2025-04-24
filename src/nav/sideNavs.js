@@ -1,14 +1,14 @@
 
 import { allTask } from '../todos';
 import {testTodos} from '../data/testTodos'
-import { setView } from '../statusChecker';
-import { filterByView } from '../contentManagers/todoManager';
+import { filterByView} from '../contentFilter';
+
+
+
 allTask.push(...testTodos)
 
 const aside = document.querySelector('#sidebar')
 
-function sideNavInit(){
-}
 
 export function initSideNav (){
 
@@ -24,6 +24,7 @@ export function initSideNav (){
       { id: 'week', text: 'This Week' },
       { id: 'allTask', text: 'All Tasks' },
       { id: 'upcoming', text: 'Upcoming' },
+      { id: 'overdue', text: 'Overdue' },
     ];
     
     buttons.forEach(button => {
