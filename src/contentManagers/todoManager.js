@@ -1,8 +1,8 @@
 import { allTask } from "../todos"
 import { filterByView } from "../contentFilter";
 import { todoItem } from "../todos";
-import { getCurrentView } from "../statusChecker";
-
+import { getCurrentView,getCurrentPeriod } from "../statusChecker";
+import { handleStatusChange } from "../todoStatus";
 
 const todoItems = document.querySelector('.todo-container')
 const todoDialog = document.getElementById('todoDialog')
@@ -10,35 +10,59 @@ const todoDialog = document.getElementById('todoDialog')
 let formData;
 
 export function displayTodo(items){
-    createTodoDOM(items,todoItems)
+    if (items.length > 0 ){
+        createTodoDOM(items,todoItems);
+        handleStatusChange(items);
+    }
+    else{
+        showNoTask();
+    }
 }
 
 function createTodoDOM(items,todoItems){
     todoItems.innerHTML= ''
 
     for(const todo of items){
-        const item = document.createElement('div')
-        const title = document.createElement('p')
-        const desc = document.createElement('p')
-        const dueDate = document.createElement('p')
+        const item = document.createElement('div');
+        const title = document.createElement('p');
+        const desc = document.createElement('p');
+        const dueDate = document.createElement('p');
+        const checkBox = document.createElement('input');
+        checkBox.setAttribute('type','checkbox');
 
-        item.className = 'todo-item'
+        item.className = 'todo-item';
+        checkBox.className = 'checkbox';
+
 
         title.textContent = todo['title']
         desc.textContent = todo['desc']
         dueDate.textContent = todo['dueDate']
 
-
+        
         item.appendChild(title)
         item.appendChild(desc)
         item.appendChild(dueDate)
+        item.appendChild(checkBox)
 
         todoItems.appendChild(item)
+        // checkTodoStatus();
+
     }
 }
 
 
+function showNoTask(){
+    todoItems.innerHTML= ''
 
+    const container = document.createElement('div');
+    const p = document.createElement('p')
+    
+    const view = getCurrentPeriod();
+
+    p.textContent = view;
+    container.appendChild(p);
+    todoItems.appendChild(container)
+}
 
 
 
@@ -59,8 +83,8 @@ export function getAddForm(){
         
         const newItem = todoItem(title,desc,dueDate,priority,project)
         
-        allTask.push(newItem)
-        const view = getCurrentView()
+        allTask.push(newItem);
+        const view = getCurrentView();
 
         filterByView(view)
         todoForm.reset()

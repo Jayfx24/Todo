@@ -1,7 +1,16 @@
 import { getToday, getEndOfWeek, getStartOfWeek } from './dateUtility';
 import { displayTodo } from './contentManagers/todoManager';
-import { setView } from './statusChecker';
+import { setView,setViewText } from './statusChecker';
 import { allTask } from './todos';
+
+
+const day = 'No Task for the day';
+const week = 'No Task for this week';
+const upcomingT = 'No Task planned';
+const overdueT = 'No Task missed, Good Job';
+const NoTask = 'No task click on the add todo button to add one'
+
+
 
 export function todayTask(items){
     const today = getToday();
@@ -43,26 +52,31 @@ export function filterByView(targetId){
     switch (targetId){
         
         case 'today':
-            setView('today')
+            setView('today');
+            setViewText(day);
             todayTask(allTask);
             break;
         case 'week':
-            setView('week')
+            setView('week');
+            setViewText(week);
             weekTask(allTask);
             break;
         
         case 'upcoming':
-            setView('upcoming')
+            setView('upcoming');
+            setViewText(upcomingT);
             upcomingTask(allTask);
             break;
 
         case 'overdue':
             setView('overdue')
+            setViewText(overdueT);
             overdueTasks(allTask);
             break;
                                      
         default:
             allTodoTasks(allTask);
+            setViewText(NoTask);
             break;
 
     }

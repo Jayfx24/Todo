@@ -22,3 +22,13 @@ export function setProjectView(view){
 export function getProjectCurrentView(){
     return currentProjectView;
 }
+
+let currentPeriodText;
+
+export function setViewText(text){
+    currentPeriodText = text;
+}
+
+export function getCurrentPeriod(){
+    return currentPeriodText;
+}
