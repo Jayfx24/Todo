@@ -48,34 +48,34 @@ export function projectFilter(items,name){
     displayTodo(projectTodos)
 
 }
-export function filterByView(targetId){
+export function filterByView(targetId, todos = allTask){
     switch (targetId){
         
         case 'today':
             setView('today');
             setViewText(day);
-            todayTask(allTask);
+            todayTask(todos);
             break;
         case 'week':
             setView('week');
             setViewText(week);
-            weekTask(allTask);
+            weekTask(todos);
             break;
         
         case 'upcoming':
             setView('upcoming');
             setViewText(upcomingT);
-            upcomingTask(allTask);
+            upcomingTask(todos);
             break;
 
         case 'overdue':
             setView('overdue')
             setViewText(overdueT);
-            overdueTasks(allTask);
+            overdueTasks(todos);
             break;
                                      
         default:
-            allTodoTasks(allTask);
+            allTodoTasks(todos);
             setViewText(NoTask);
             break;
 

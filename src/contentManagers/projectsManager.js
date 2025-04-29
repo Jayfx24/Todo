@@ -65,7 +65,7 @@ export function getProjectForm(){
     const pName = formData.get('projectFormName')
 
     allProjects.push(newProject(pName));
-    console.log(allProjects)
+    // console.log(allProjects)
     displayProjects()
 
     pf.reset()

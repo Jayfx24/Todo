@@ -163,3 +163,9 @@ li button{
   background-color: blueviolet;
   
 }
+
+.completed-div{
+  background-color: blue;
+  width: 100%;
+  height: 200px;
+}
