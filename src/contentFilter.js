@@ -1,83 +1,137 @@
 import { getToday, getEndOfWeek, getStartOfWeek } from './dateUtility';
 import { displayTodo } from './contentManagers/todoManager';
-import { setView,setViewText } from './statusChecker';
+import { setView,setViewText, setCurrTaskView } from './statusChecker';
 import { allTask } from './todos';
 
+// const  currProjectView = getProjectCurrentView();
+const taskMessages = {
+    today: [
+      'No tasks for today! Take it easy or plan something ahead.',
+      'Looks like today is task-free! Maybe take a break?',
+      'No tasks to tackle today, enjoy the moment.',
+    ],
+    week: [
+      'You’re all set for the week—no tasks yet!',
+      'No tasks this week, maybe start planning ahead?',
+      'Take the week off—there’s nothing on your plate!',
+    ],
+    upcoming: [
+      'No tasks planned, time to add something to look forward to!',
+      'The future is wide open, maybe add some tasks to stay on track?',
+      'Looks like there’s nothing planned ahead. Let’s fill that up!',
+    ],
+    overdue: [
+      'You missed some tasks. No worries, you’ve got this!',
+      'Overdue tasks—time to catch up!',
+      'It’s never too late! Let’s finish those overdue tasks!',
+    ],
+    default: [
+      'No tasks available. Click the add button and start tracking your goals.',
+      'Looks like you don’t have any tasks yet—add your first one!',
+      'Ready to get started? Click on add to start adding tasks!',
+    ],
+  };
 
-const day = 'No Task for the day';
-const week = 'No Task for this week';
-const upcomingT = 'No Task planned';
-const overdueT = 'No Task missed, Good Job';
-const NoTask = 'No task click on the add todo button to add one'
+const currTaskMsg = {
+  today: "Today",
+  tasks: "All Tasks",
+  week: "This Week",
+  upcoming: "This Month",
+  overdue: "Overdue",
+}
+
+
+  function getRandomMessage(view) {
+    const messages = taskMessages[view] || taskMessages.default;
+    const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+    console.log(randomMessage)
+    return randomMessage;
+  }
 
 
 
 export function todayTask(items){
     const today = getToday();
     const todayArr = items.filter(item => item['dueDate'] === today);
-    displayTodo(todayArr)
+    return todayArr;
 }
 
 export function weekTask(items){
     const endOfWeekDate = getEndOfWeek();
     const startOfWeekDate = getStartOfWeek();
     const weekArr = items.filter(item => item['dueDate'] <= endOfWeekDate && item['dueDate'] >= startOfWeekDate);
-    displayTodo(weekArr)
+    return weekArr;
 }
 
 export function upcomingTask(items){
     const endOfWeekDate = getEndOfWeek();
     const upcomingArr = items.filter(item => item['dueDate'] > endOfWeekDate);
-    displayTodo(upcomingArr);
+    return upcomingArr;
 }
 
 export function overdueTasks(items){
     const today = getToday();
     const overdueArr = items.filter(item => item['status'] === false && item['dueDate'] < today);
-    displayTodo(overdueArr)
+    return overdueArr;
 }
 
 export function allTodoTasks(items){
-    displayTodo(items)
-    console.log('working')
+   
+    return items;
 }
 
 
 export function projectFilter(items,name){
-    const projectTodos = items.filter(item => item['pt'] === name);
-    displayTodo(projectTodos)
+    const projectTodos = items.filter(item => item['project'] === name);
+    setCurrTaskView(name)
+    return projectTodos;
 
 }
-export function filterByView(targetId, todos = allTask){
+export function filterByView(targetId, todos){
+    let message;
     switch (targetId){
-        
         case 'today':
             setView('today');
-            setViewText(day);
-            todayTask(todos);
-            break;
+            message = getRandomMessage(targetId)
+            setViewText(message);
+            setCurrTaskView(currTaskMsg[targetId])
+            return todayTask(todos);
+            
         case 'week':
             setView('week');
-            setViewText(week);
-            weekTask(todos);
-            break;
+            message = getRandomMessage(targetId)
+            setViewText(message);
+            setCurrTaskView(currTaskMsg[targetId])
+            return weekTask(todos);
+            
         
         case 'upcoming':
             setView('upcoming');
-            setViewText(upcomingT);
-            upcomingTask(todos);
-            break;
+            message = getRandomMessage(targetId)
+            setViewText(message);
+            setCurrTaskView(currTaskMsg[targetId])
+            return upcomingTask(todos);
+            
 
         case 'overdue':
             setView('overdue')
-            setViewText(overdueT);
-            overdueTasks(todos);
-            break;
-                                     
+            message = getRandomMessage(targetId)
+            setViewText(message);;
+            setCurrTaskView(currTaskMsg[targetId])
+            return overdueTasks(todos);
+            
+        case 'tasks':
+            setView('all');
+            message = getRandomMessage('default')
+            setViewText(message);
+            setCurrTaskView(currTaskMsg[targetId])
+            return allTodoTasks(todos);
+            
         default:
-            allTodoTasks(todos);
-            setViewText(NoTask);
-            break;
+            setViewText(overdueT);
+            return projectFilter(todos,targetId);
+            
+            
 
     }
 }

@@ -3,7 +3,8 @@ import { allProjects } from "../projects";
 import { allTask } from "../todos";
 import { projectFilter } from "../contentFilter";
 import { newProject } from "../projects";
-import { setProjectView } from "../statusChecker";
+import { setProjectView, setView } from "../statusChecker";
+import { displayTodo } from "./todoManager";
 
 
 const aside = document.querySelector('#sidebar')
@@ -18,6 +19,7 @@ allProjects.push(...testProjectsData);
 
 export function displayProjects() {
   createProjects(allProjects);
+  projectBtns();
 }
 
 function createProjects(items) {
@@ -29,6 +31,8 @@ function createProjects(items) {
     const btn = document.createElement("button");
     btn.textContent = `${pj["name"].toUpperCase()}`;
     btn.name = `${pj["name"].toLowerCase()}`;
+    btn.id = pj['name'].toLowerCase();
+    btn.className = 'project-nav-btn';
     li.className = "project-nav-item";
 
     li.appendChild(btn);
@@ -39,17 +43,23 @@ function createProjects(items) {
   aside.appendChild(projectNav)
 }
 
+function projectBtns() {
+  const projectUl = document.querySelector('.project-list');
 
-projectUl.addEventListener('click',(e) =>{
-  if (e.target.tagName === 'BUTTON'){
+  // projectNav.appendChild(projectUl);
+  projectUl.addEventListener('click',(e) =>{
+    if (e.target.tagName === 'BUTTON'){
 
-    const pName = e.target.name;
-    setProjectView(pName);
-    projectFilter(allTask,pName);
-  }
-  
-  
-})
+      const pName = e.target.name;
+      setProjectView(pName);
+      setView(pName);
+      const projectTodos = projectFilter(allTask,pName);
+      displayTodo(projectTodos);
+    }
+    
+    
+  })
+}
 
 export function getProjectForm(){
   console.log('here')
@@ -65,7 +75,7 @@ export function getProjectForm(){
     const pName = formData.get('projectFormName')
 
     allProjects.push(newProject(pName));
-    // console.log(allProjects)
+    
     displayProjects()
 
     pf.reset()

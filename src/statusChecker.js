@@ -1,16 +1,20 @@
-export let currentView = 'all'
-
+export let currentView = null;
+let currTaskMsg = null;
 
 export function setView(view){
     currentView = view;
+    console.log(`current view - ${currentView}`)
+
 }
 
 export function getCurrentView(){
+    console.log(`current get view - ${currentView}`)
+
     return currentView;
 }
 
 
-let currentProjectView = 'personal'
+let currentProjectView = 'personal';
 
 export function setProjectView(view){
     currentProjectView = view;
@@ -31,4 +35,14 @@ export function setViewText(text){
 
 export function getCurrentPeriod(){
     return currentPeriodText;
+}
+
+
+
+export function setCurrTaskView(text){
+    currTaskMsg = text.toUpperCase();
+}
+
+export function getCurrentViewMsg(){
+    return currTaskMsg;
 }

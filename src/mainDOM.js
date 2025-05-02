@@ -83,11 +83,19 @@ export function createTodoForm(ele) {
     const option = document.createElement("option");
     option.value = level;
     option.textContent = level.charAt(0).toUpperCase() + level.slice(1);
+    // option.textContent = level;
     prioritySelect.appendChild(option);
   });
 
   priorityGroup.appendChild(priorityLabel);
   priorityGroup.appendChild(prioritySelect);
+
+  // <input type="hidden" name="uuid" id="uuid">
+
+  const uuid  = document.createElement('input');
+  uuid.setAttribute('type','hidden');
+  uuid.setAttribute('name','uuid');
+  uuid.setAttribute('id','uuid');
 
   // Submit Button
   const submitButton = document.createElement("button");
@@ -101,6 +109,7 @@ export function createTodoForm(ele) {
   form.appendChild(dueDateGroup);
   form.appendChild(projectTypeGroup);
   form.appendChild(priorityGroup);
+  form.appendChild(uuid);
   form.appendChild(submitButton);
 
   
@@ -141,7 +150,7 @@ export function createProjectForm(ele) {
 }
 
 function currPView(allProjects){
-  const view = getProjectCurrentView().toLowerCase()
+  const view = getProjectCurrentView().toLowerCase();
   const updatedArr = [allProjects.find(item => item['name'] === view),...allProjects.filter(item => item['name'] != view)];
   console.log(updatedArr)
   return updatedArr;

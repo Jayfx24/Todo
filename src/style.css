@@ -27,6 +27,11 @@
 
     /* input  */
   --input-padding : 0.25rem;
+
+     /* padding */
+     --padding-sm: 0.5rem;
+     --padding: 1rem;
+     --padding-lg: 1.5rem;
   }
 
 *{
@@ -47,7 +52,7 @@ header{
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 2px solid ;
+  /* border: 2px solid ; */
   height: 3rem;
   padding: 15px;
 }
@@ -55,10 +60,26 @@ header{
 main{
   width: 100%;
   height: 100vh;
+  /* border: 1px solid; */
+  /* display: flex; */
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto 1fr;
   border: 1px solid;
-  display: flex;
+  
 
 }
+
+.add-todo{
+
+}
+.main-content{
+  grid-column: 2;
+  grid-row: 2;
+
+}
+
+
 
 button{
   border: 0;
@@ -71,14 +92,16 @@ ul{
   /* border: 1px solid black; */
 }
 #sidebar{
-  width: 200px;
+  grid-row: 2;
+  width: 150px;
   height: auto;
   border: 1px solid;
   /* color: white; */
-  padding: 10px;
+  padding: var(--padding) ;
   /* background-color: navy; */
   display: flex;
   flex-direction: column;
+  /* align-items: center; */
   
   
 }
@@ -107,15 +130,23 @@ li button{
 }
 .main-content{
   flex: 1;
-  border: 1px solid;
+  /* border: 1px solid; */
 
 }
 
+.show-div{
+  font-size: 1rem;
+}
+
 .add-todo{
+  grid-column: 2 / end;
   /* border: var(--border); */
   /* margin-bottom: ; */
   padding: 0.4rem 0.4rem;
   text-align: right;
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
 }
 #addTodo, #addProject{
   border: var(--border);
@@ -123,9 +154,44 @@ li button{
   border-radius: var(--border-radius);
 }
 
-.todo-item{
+.todo-container{
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+}
+.todo-div{
   border: 1px solid;
-  margin-bottom: 20px;
+  height: 100%;
+  flex: 1;
+  padding: var(--padding-sm) ;
+  
+  
+}
+.todo-wrap{
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+.todo-main{
+  display: flex;
+  gap: 1rem;
+  height: 100%;
+  border: var(--border);
+  padding: var(--padding);
+
+}
+
+.sub-div{
+  display: block;
+  border: var(--border);
+  border-top: none;
+  padding: var(--padding-sm);
+}
+
+.sub-div-show{
+  display: block;
 }
 
 /* dialogs */
@@ -137,6 +203,9 @@ li button{
   
 }
 
+#todoDialog[open],#projectDialog[open]{
+  /* animation: appear 2s; */
+}
 #todoForm{
 
 }
@@ -158,14 +227,27 @@ li button{
 }
 
 #todoForm > button{
-  border: var(--border);
+  /* border: var(--border); */
   padding: var(--dialog-btns-padding);
   background-color: blueviolet;
   
 }
 
 .completed-div{
-  background-color: blue;
+  flex: 1;
   width: 100%;
   height: 200px;
+  border: var(--border);
+}
+
+.scroll{
+  overflow: auto;
+}
+
+.show{
+  display: block;
+}
+
+.hide{
+  display: none;
 }
