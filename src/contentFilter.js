@@ -76,14 +76,16 @@ export function overdueTasks(items){
 }
 
 export function allTodoTasks(items){
-   
+  //  filterByView('tasks',items)
     return items;
 }
 
 
 export function projectFilter(items,name){
     const projectTodos = items.filter(item => item['project'] === name);
-    setCurrTaskView(name)
+    setCurrTaskView(name);
+    const message = getRandomMessage(name)
+    setViewText(message);
     return projectTodos;
 
 }
@@ -128,7 +130,9 @@ export function filterByView(targetId, todos){
             return allTodoTasks(todos);
             
         default:
-            setViewText(overdueT);
+      
+           
+
             return projectFilter(todos,targetId);
             
             

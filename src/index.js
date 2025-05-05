@@ -4,16 +4,23 @@ import { displayTodo } from "./contentManagers/todoManager";
 import {  initSideNav } from "./nav/sideNavs";
 import { initBtns } from "./contentManagers/dialogManager";
 import { allTask } from "./todos";
+import { filterByView } from "./contentFilter";
+import { allTodoTasks } from "./contentFilter";
 
 function app() {
   
-  displayTodo(allTask)
   initSideNav();
   // displayProjects();
   initBtns();
+  initTodo(allTask)
+  
 
 }
 
+function initTodo(items){
+  displayTodo(items)
+  filterByView('tasks',items)
+}
 app();
 
 // work on overdue,update project in form to match current project - DONE
