@@ -9,6 +9,7 @@ import {
   getCurrentViewMsg
 } from "../statusChecker";
 import { getToday, dueDays, formattedDate } from "../dateUtility";
+import { icons } from "../assets/icons";
 
 
 const todoDialog = document.getElementById("todoDialog");
@@ -88,6 +89,7 @@ export function displayTodo(items) {
 
   handleStatusChange(items);
   displayCurrentView();
+  deleteTodoItem();
 }
 
 function showNoTask() {
@@ -155,7 +157,7 @@ function createTodoDOM(items, parent) {
     checkboxLabel.textContent = "completed?"
     checkboxInput.setAttribute("type", "checkbox");
     checkboxInput.setAttribute("data-id", todo.uuid);
-    checkboxInput.setAttribute("id", todo.uuid);
+    // checkboxInput.setAttribute("id", todo.uuid);
     checkboxLabel.setAttribute('for',todo.uuid);
     editBtn.textContent = "Edit";
     editBtn.className = "edit";
@@ -179,9 +181,6 @@ function createTodoDOM(items, parent) {
       getAddForm();
     });
 
-    
-
-
     // overdue
     const overdue = document.createElement('p');
   
@@ -196,6 +195,22 @@ function createTodoDOM(items, parent) {
       console.log(dueDate.textContent)
     }
 
+    // delete
+    const deleteSvgWrapper = document.createElement('span');
+    const deleteSvg = document.createElement('span');
+    const deleteHoverSvg = document.createElement('span');
+    deleteSvgWrapper.className = 'delete-wrapper';
+    deleteSvg.className = 'delete-todo';
+    deleteHoverSvg.className = 'delete-hover';
+    deleteSvgWrapper.dataset.id = todo.uuid;
+    
+    deleteSvg.innerHTML = icons.delete;
+    deleteHoverSvg.innerHTML = icons.deleteHover;
+
+
+    
+    deleteSvgWrapper.appendChild(deleteSvg);
+    deleteSvgWrapper.appendChild(deleteHoverSvg);
     checkboxDiv.appendChild(checkboxLabel);
     checkboxDiv.appendChild(checkboxInput);
     todoMainDiv.appendChild(title);
@@ -204,6 +219,7 @@ function createTodoDOM(items, parent) {
     todoMainDiv.appendChild(subTask);
     todoMainDiv.appendChild(checkboxDiv);
     todoMainDiv.appendChild(editBtn);
+    todoMainDiv.appendChild(deleteSvgWrapper);
     
     subContent.appendChild(desc);
     subContent.appendChild(createdAt);
@@ -250,10 +266,6 @@ export function getAddForm() {
       } else {
         return;
       }
-      // const view = getProjectCurrentView();
-      // console.log(view);
-      // const projectTodos = projectFilter(allTask,view);
-      // displayTodo(projectTodos);
     } 
     else {
       const newItem = todoItem(title, desc, dueDate, priority, project);
@@ -290,13 +302,35 @@ function updateStatus(id, status, items) {
   }
 }
 
+
+export function deleteTodoItem(){
+  const deleteIcons = document.querySelectorAll('.delete-wrapper');
+  deleteIcons.forEach(item =>{
+    item.addEventListener('click', (e)=>{
+
+      const wrapper = e.target.closest('[data-id]');
+      const id = wrapper.dataset.id;
+      const index = allTask.findIndex(task => task.uuid === id);
+      if (index !== -1) {
+        allTask.splice(index, 1); 
+      }
+      console.table(allTask)
+
+
+      const view = getCurrentView();
+      console.log(`passed view - ${view}`);
+      const list = filterByView(view, allTask);
+      displayTodo(list);
+    })
+  })
+
+}
 export function populateForm(id) {
   console.log("here");
 
   const todoData = allTask.find((item) => item["uuid"] === id);
   const todoForm = document.getElementById("todoForm");
-  // console.log(todoForm.elements);
-  // console.log(todoData);
+  
 
   todoForm.elements["title"].value = todoData["title"];
   todoForm.elements["desc"].value = todoData["desc"];
@@ -320,13 +354,19 @@ export function displayTodoNav() {
 
   buttons.forEach((button) => {
     const li = document.createElement("li");
-    li.classList.add("sidebar_item");
-
+    const svgWrapper = document.createElement('span');
+    const textWrapper = document.createElement('span');
     const btn = document.createElement("button");
+    li.classList.add("sidebar_item");
+    
+    svgWrapper.classList.add("btn-wrapper");
     btn.classList.add("sidebar_button");
     btn.id = button.id;
-    btn.textContent = button.text;
+    svgWrapper.innerHTML = `${icons[button.id]}`;
+    textWrapper.innerHTML = `${button.text}`;
 
+    btn.appendChild(svgWrapper)
+    btn.appendChild(textWrapper)
     li.appendChild(btn);
     sidebarNav.appendChild(li);
 
@@ -352,9 +392,10 @@ function displayCurrentView(){
   
   const currView = getCurrentViewMsg();
   console.log(`dialog ${currView}`)
-  showCurrText.textContent = currView;
+
+  showCurr.innerHTML = `${icons.view}<span>${currView}</span>`;
   showCurr.className = "show-view";
 
-  showCurr.appendChild(showCurrText);
+ 
   
 }

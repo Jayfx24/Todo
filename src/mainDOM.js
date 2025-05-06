@@ -1,6 +1,6 @@
 import { allProjects } from "./projects";
 import { getProjectCurrentView } from "./statusChecker";
-
+import { icons } from "./assets/icons";
 
 export function createTodoForm(ele) {
   const form = document.createElement("form");
@@ -90,7 +90,7 @@ export function createTodoForm(ele) {
   priorityGroup.appendChild(priorityLabel);
   priorityGroup.appendChild(prioritySelect);
 
-  // <input type="hidden" name="uuid" id="uuid">
+  
 
   const uuid  = document.createElement('input');
   uuid.setAttribute('type','hidden');
@@ -101,8 +101,17 @@ export function createTodoForm(ele) {
   const submitButton = document.createElement("button");
   submitButton.type = "submit";
   submitButton.textContent = "Send";
+  submitButton.id = 'todoFormBtn'
 
-  // Append all to form
+
+  // close
+  // const closeSvgWrapper = document.createElement('span');
+  // closeSvgWrapper.className = "close-svg";
+  // closeSvgWrapper.innerHTML = icons.close;
+
+
+  // // Append all to form
+  // form.appendChild(closeSvgWrapper);
   form.appendChild(projectGroup);
   form.appendChild(projectTypeGroup);
   form.appendChild(descGroup);
@@ -140,6 +149,7 @@ export function createProjectForm(ele) {
    const submitButton = document.createElement("button");
    submitButton.type = "submit";
    submitButton.textContent = "Create new project :)";
+   submitButton.id = 'projectFormBtn'
 
   form.appendChild(projectGroup);
   form.appendChild(submitButton);

@@ -1,6 +1,6 @@
 import "./style.css";
 import { displayProjects } from "./contentManagers/projectsManager";
-import { displayTodo } from "./contentManagers/todoManager";
+import { displayTodo,deleteTodoItem } from "./contentManagers/todoManager";
 import {  initSideNav } from "./nav/sideNavs";
 import { initBtns } from "./contentManagers/dialogManager";
 import { allTask } from "./todos";
@@ -19,7 +19,9 @@ function app() {
 
 function initTodo(items){
   displayTodo(items)
+  deleteTodoItem();
   filterByView('tasks',items)
+
 }
 app();
 

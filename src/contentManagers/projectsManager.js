@@ -5,7 +5,7 @@ import { projectFilter } from "../contentFilter";
 import { newProject } from "../projects";
 import { setProjectView, setView } from "../statusChecker";
 import { displayTodo } from "./todoManager";
-
+import { icons } from "../assets/icons";
 
 const aside = document.querySelector('#sidebar')
 const projectNav = document.createElement('div');
@@ -29,12 +29,18 @@ function createProjects(items) {
     console.log(pj);
     const li = document.createElement("li");
     const btn = document.createElement("button");
-    btn.textContent = `${pj["name"].toUpperCase()}`;
+    const textWrapper = document.createElement("span");
+    const svgWrapper = document.createElement("span");
+
+    svgWrapper.innerHTML = `${icons.card}`
+    textWrapper.textContent = `${pj["name"].toUpperCase()}`;
     btn.name = `${pj["name"].toLowerCase()}`;
     btn.id = pj['name'].toLowerCase();
     btn.className = 'project-nav-btn';
     li.className = "project-nav-item";
 
+    btn.appendChild(svgWrapper)
+    btn.appendChild(textWrapper)
     li.appendChild(btn);
     projectUl.appendChild(li);
 

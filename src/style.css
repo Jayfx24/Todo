@@ -15,7 +15,7 @@
   --dialog-font-size: 1.25rem;
   --dialog-btns-padding : 0.5rem 1rem;
 
-    /* Font Sizes */
+    /* Font */
     --font-size: 1rem;
     --font-size-md: 1.25rem; 
     --font-size-large: 1.5rem; 
@@ -25,6 +25,9 @@
     --input-font-size: 1rem; 
     --button-font-size: 1rem; 
 
+    --font-w-x : 400;
+    --font-w-xx : 600;
+    --font-w-xxx : 800;
     /* input  */
   --input-padding : 0.25rem;
 
@@ -32,8 +35,24 @@
      --padding-sm: 0.5rem;
      --padding: 1rem;
      --padding-lg: 1.5rem;
-  }
+     
+     /* colors */
+     --bg : hsl(0, 0%, 98%);
+     --bg-container:  hsl(0, 0%, 100%);
 
+     --text-primary:  hsl(220, 15%, 20%);
+     --text-secondary:  hsl(220, 10%, 40%);
+
+     --border : 1px solid hsl(220, 15%, 90%);
+
+     --completed: hsl(140, 60%, 45%);
+     --pending: hsl(35, 85%, 55%);
+     --overdue: hsl(0, 70%, 60%) ;
+
+     --primary-hover : hsl(220, 90%, 46%);
+     --primary : hsl(220, 90%, 56%);
+  }
+  
 *{
   box-sizing: border-box;
   margin: 0;
@@ -45,6 +64,7 @@
 body{
   width: 100%;
   min-height: 100vh;
+  background-color: var(--bg);
 
 }
 
@@ -63,9 +83,9 @@ main{
   /* border: 1px solid; */
   /* display: flex; */
   display: grid;
-  grid-template-columns: auto 1fr;
+  grid-template-columns: 200px 1fr;
   grid-template-rows: auto 1fr;
-  border: 1px solid;
+  /* border: 1px solid; */
   
 
 }
@@ -82,8 +102,8 @@ main{
 
 
 button{
-  border: 0;
-  background-color: inherit;
+  /* border: 0;
+  background-color: inherit; */
   cursor: pointer;
 }
 
@@ -93,15 +113,16 @@ ul{
 }
 #sidebar{
   grid-row: 2;
-  width: 150px;
+  width: 100%;
   height: auto;
-  border: 1px solid;
+  /* border: 1px solid; */
   /* color: white; */
-  padding: var(--padding) ;
+  padding: var(--padding-sm) var(--padding) ;
   /* background-color: navy; */
   display: flex;
   flex-direction: column;
   /* align-items: center; */
+  overflow: auto;
   
   
 }
@@ -110,24 +131,59 @@ li button{
 
 }
 #sidebar > * {
-  border: 1px solid white;
+  /* border: 1px solid black; */
   /* text-align: center; */
+}
+
+.sidebar_button,.project-nav-btn{
+  background-color: transparent;
+  padding: var(--padding) var(--padding-sm);
+  border: 1px solid var(--border);
+  border-radius: 15px;
+  font-weight: 800;
+  width: 100%;
+  text-align: justify;
+  font-size: 1.1rem;
+
+}
+
+.sidebar_button,.project-nav-btn{
+  /* display: flex;
+
+  gap: .2rem; */
+}
+.sidebar_button:hover{
+  background-color: var(--primary-hover);
+}
+.project-nav-btn:hover{
+  background-color: green;
 }
 
 .todo-nav{
   flex: 1;
 }
 .project-nav{
-
+  margin-top: 1rem;
   flex: 2;
 }
 
 .sidebar_item, .project-nav-item{
   margin-bottom: 10px;
 }
-.sidebar_button{
- 
+
+svg{
+  width: 25px;
+  height: 24px;
 }
+.sidebar_button svg,.project-nav-btn svg {
+  vertical-align: bottom;
+  margin-right: .5rem;
+}
+
+.project-nav-btn{
+
+}
+
 .main-content{
   flex: 1;
   /* border: 1px solid; */
@@ -138,6 +194,30 @@ li button{
   font-size: 1rem;
 }
 
+.show-view{
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+
+  
+}
+
+.show-view > *{
+  /* border: 1px solid black; */
+}
+.show-view svg{
+  vertical-align: bottom;  
+  width: 20px;
+  height: 24px;
+  flex-shrink: 0;
+  
+
+}
+.show-view span{
+  font-size:20px;
+  /* padding-bottom: 8px; */
+}
 .add-todo{
   grid-column: 2 / end;
   /* border: var(--border); */
@@ -166,7 +246,7 @@ li button{
 
 }
 .todo-div{
-  border: 1px solid;
+  /* border: 1px solid; */
   height: 100%;
   flex: 1;    
 }
@@ -189,6 +269,23 @@ li button{
   border-radius: var(--border-radius-lg);
   padding: var(--padding) var(--padding-lg);
 }
+
+.delete-todo,.delete-hover{
+  fill: red;
+  cursor: pointer;
+}
+
+.delete-hover{
+  display: none;
+}
+
+.delete-wrapper:hover .delete-hover{
+  display: inline;
+}
+.delete-wrapper:hover .delete-todo{
+  display: none;
+}
+
 .completed-div{
   flex: 1;
   width: 100%;
@@ -234,8 +331,11 @@ li button{
 /* dialogs */
 #todoDialog,#projectDialog{
  margin: auto;
- padding: 1rem;
+ padding: 2rem 1rem;
  width: 400px;
+ border: none;
+ overflow: visible;
+
   
   
 }
@@ -244,9 +344,31 @@ li button{
   /* animation: appear 2s; */
 }
 #todoForm{
-
+  position: relative;
 }
 
+
+
+
+.close-svg{
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  cursor: pointer;
+  margin-bottom: 15px;
+
+  
+}
+
+.close-svg svg{
+  /* width:25px;
+  height:25px; */
+ 
+}
+
+.close-svg svg:hover{
+ fill: red;
+}
 .form-group{
   /* border: var(--border); */
   margin-bottom: var(--spacing);
@@ -263,13 +385,19 @@ li button{
   font-size: var(--font-size);
 }
 
-#todoForm > button{
+#todoFormBtn,#projectFormBtn{
   /* border: var(--border); */
   padding: var(--dialog-btns-padding);
-  background-color: blueviolet;
+  background-color: var(--primary);
+  border: var(--primary);
+  border-radius: var(--border-radius-lg);
+  width: fit-content;
+  min-width: 100px;
   
 }
-
+.update-form > button{
+  background-color: lightgreen;
+}
 
 .scroll{
   overflow: auto;

@@ -1,0 +1,22 @@
+export const icons = {
+  allTodoFolder:
+    '<svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="48" height="48" viewBox="0 0 48 48"><linearGradient id="-ghsx0aE0WOJd9YQAcLbwa_iStIoVUnNAOT_gr1" x1="-10.368" x2="76.006" y1="55.338" y2="-17.138" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#262626" stop-opacity="0"></stop><stop offset="1" stop-color="#262626" stop-opacity=".8"></stop></linearGradient><path fill="url(#-ghsx0aE0WOJd9YQAcLbwa_iStIoVUnNAOT_gr1)" d="M38,12c3.314,0,6,2.686,6,6v23H10c-3.314,0-6-2.686-6-6V12H38z"></path><linearGradient id="-ghsx0aE0WOJd9YQAcLbwb_iStIoVUnNAOT_gr2" x1="12.5" x2="12.5" y1="-6.369" y2="15.39" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#262626" stop-opacity="0"></stop><stop offset=".974" stop-color="#262626" stop-opacity=".8"></stop></linearGradient><path fill="url(#-ghsx0aE0WOJd9YQAcLbwb_iStIoVUnNAOT_gr2)" d="M21,10v2H4V5h12C18.761,5,21,7.239,21,10z"></path></svg>',
+    today: '<svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="48" height="48" viewBox="0 0 48 48"><path fill="#FF9800" d="M11 11H37V37H11z"></path><path fill="#FF9800" d="M11.272 11.272H36.728V36.728H11.272z" transform="rotate(-45.001 24 24)"></path><path fill="#FFEB3B" d="M13,24c0,6.077,4.923,11,11,11c6.076,0,11-4.923,11-11s-4.924-11-11-11C17.923,13,13,17.923,13,24"></path></svg>',
+    week : '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>calendar-week</title><path d="M6 1H8V3H16V1H18V3H19C20.11 3 21 3.9 21 5V19C21 20.11 20.11 21 19 21H5C3.89 21 3 20.1 3 19V5C3 3.89 3.89 3 5 3H6V1M5 8V19H19V8H5M7 10H17V12H7V10Z" /></svg>',
+    upcoming: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>timer-outline</title><path d="M12,20A7,7 0 0,1 5,13A7,7 0 0,1 12,6A7,7 0 0,1 19,13A7,7 0 0,1 12,20M19.03,7.39L20.45,5.97C20,5.46 19.55,5 19.04,4.56L17.62,6C16.07,4.74 14.12,4 12,4A9,9 0 0,0 3,13A9,9 0 0,0 12,22C17,22 21,17.97 21,13C21,10.88 20.26,8.93 19.03,7.39M11,14H13V8H11M15,1H9V3H15V1Z" /></svg>',
+    overdue: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>alarm-multiple</title><path d="M9.29,3.25L5.16,6.72L4,5.34L8.14,1.87L9.29,3.25M22,5.35L20.84,6.73L16.7,3.25L17.86,1.87L22,5.35M13,4A8,8 0 0,1 21,12A8,8 0 0,1 13,20A8,8 0 0,1 5,12A8,8 0 0,1 13,4M13,6A6,6 0 0,0 7,12A6,6 0 0,0 13,18A6,6 0 0,0 19,12A6,6 0 0,0 13,6M12,7.5H13.5V12.03L16.72,13.5L16.1,14.86L12,13V7.5M1,14C1,11.5 2.13,9.3 3.91,7.83C3.33,9.1 3,10.5 3,12L3.06,13.13L3,14C3,16.28 4.27,18.26 6.14,19.28C7.44,20.5 9.07,21.39 10.89,21.78C10.28,21.92 9.65,22 9,22A8,8 0 0,1 1,14Z" /></svg>',   
+    tasks : '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>home-variant</title><path d="M12,3L20,9V21H15V14H9V21H4V9L12,3Z" /></svg>',
+    view : '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>note-text</title><path d="M14,10H19.5L14,4.5V10M5,3H15L21,9V19A2,2 0 0,1 19,21H5C3.89,21 3,20.1 3,19V5C3,3.89 3.89,3 5,3M5,12V14H19V12H5M5,16V18H14V16H5Z" /></svg>',
+    card: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>card-account-details</title><path d="M2,3H22C23.05,3 24,3.95 24,5V19C24,20.05 23.05,21 22,21H2C0.95,21 0,20.05 0,19V5C0,3.95 0.95,3 2,3M14,6V7H22V6H14M14,8V9H21.5L22,9V8H14M14,10V11H21V10H14M8,13.91C6,13.91 2,15 2,17V18H14V17C14,15 10,13.91 8,13.91M8,6A3,3 0 0,0 5,9A3,3 0 0,0 8,12A3,3 0 0,0 11,9A3,3 0 0,0 8,6Z" /></svg>',
+    close: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>close</title><path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" /></svg>',
+    delete: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>delete</title><path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z" /></svg>',
+    deleteHover: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>delete-empty</title><path d="M20.37,8.91L19.37,10.64L7.24,3.64L8.24,1.91L11.28,3.66L12.64,3.29L16.97,5.79L17.34,7.16L20.37,8.91M6,19V7H11.07L18,11V19A2,2 0 0,1 16,21H8A2,2 0 0,1 6,19Z" /></svg>',
+
+};
+
+// { id: "tasks", text: "Tasks" },
+// { id: "today", text: "Today" },
+// { id: "week", text: "This Week" },
+// // { id: "allTask", text: "All Tasks" },
+// { id: "upcoming", text: "Upcoming" },
+// { id: "overdue", text: "Overdue" },

@@ -3,7 +3,7 @@ import {getAddForm, populateForm } from "./todoManager"
 import { getProjectForm } from "./projectsManager"
 import { createTodoForm,createProjectForm } from "../mainDOM"
 import { getCurrentView } from "../statusChecker"
-
+import { icons } from "../assets/icons"
 
 
 const addTodoBtn = document.getElementById('addTodo')
@@ -22,10 +22,10 @@ export function initBtns(){
     setupProjectDialog();
 
     addTodoBtn.addEventListener('click',()=>{
-        updateTodoForm();
+        getAddForm();
+        // updateTodoForm();
         todoDialog.showModal();
         
-        getAddForm();
     });
 
     addProjectBtn.addEventListener('click',()=>{
@@ -34,12 +34,22 @@ export function initBtns(){
     });
 
     dialogs.forEach((dialog) => {
+        const closeSvgWrapper = document.createElement('span');
+        closeSvgWrapper.className = "close-svg";
+        closeSvgWrapper.innerHTML = icons.close;
+
+
+        // Append all to form
+        dialog.appendChild(closeSvgWrapper);
         dialog.addEventListener("click", (event) => {
             // Close dialog if clicked outside of content area
             if (event.target === dialog) {
                 dialog.close();
             }
         });
+        closeSvgWrapper.addEventListener('click',()=>{
+            dialog.close();
+        })
     });
     
    
@@ -60,16 +70,4 @@ function setupProjectDialog(){
 
 }
 
-// function attachEditListeners() {
-//     const edit = document.querySelectorAll('.edit');
-//     console.log(edit.length);
 
-//     edit.forEach((btn) => {
-//         btn.addEventListener('click', (e) =>{
-//            const id =  e.target.dataset.id;
-//             populateForm(id);
-//         } 
-
-            
-//     )});
-// }

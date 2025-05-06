@@ -32,7 +32,7 @@ const taskMessages = {
     ],
   };
 
-const currTaskMsg = {
+const currentTaskHeading = {
   today: "Today",
   tasks: "All Tasks",
   week: "This Week",
@@ -96,14 +96,14 @@ export function filterByView(targetId, todos){
             setView('today');
             message = getRandomMessage(targetId)
             setViewText(message);
-            setCurrTaskView(currTaskMsg[targetId])
+            setCurrTaskView(currentTaskHeading[targetId])
             return todayTask(todos);
             
         case 'week':
             setView('week');
             message = getRandomMessage(targetId)
             setViewText(message);
-            setCurrTaskView(currTaskMsg[targetId])
+            setCurrTaskView(currentTaskHeading[targetId])
             return weekTask(todos);
             
         
@@ -111,7 +111,7 @@ export function filterByView(targetId, todos){
             setView('upcoming');
             message = getRandomMessage(targetId)
             setViewText(message);
-            setCurrTaskView(currTaskMsg[targetId])
+            setCurrTaskView(currentTaskHeading[targetId])
             return upcomingTask(todos);
             
 
@@ -119,20 +119,17 @@ export function filterByView(targetId, todos){
             setView('overdue')
             message = getRandomMessage(targetId)
             setViewText(message);;
-            setCurrTaskView(currTaskMsg[targetId])
+            setCurrTaskView(currentTaskHeading[targetId])
             return overdueTasks(todos);
             
         case 'tasks':
-            setView('all');
+            setView('tasks');
             message = getRandomMessage('default')
             setViewText(message);
-            setCurrTaskView(currTaskMsg[targetId])
+            setCurrTaskView(currentTaskHeading[targetId])
             return allTodoTasks(todos);
             
         default:
-      
-           
-
             return projectFilter(todos,targetId);
             
             
