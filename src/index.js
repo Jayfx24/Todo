@@ -3,12 +3,24 @@ import { displayProjects } from "./contentManagers/projectsManager";
 import { displayTodo,deleteTodoItem } from "./contentManagers/todoManager";
 import {  initSideNav } from "./nav/sideNavs";
 import { initBtns } from "./contentManagers/dialogManager";
-import { allTask } from "./todos";
+// import { allTask } from "./todos";
 import { filterByView } from "./contentFilter";
 import { allTodoTasks } from "./contentFilter";
+import { testTodos } from "./data/testTodos";
+import { testProjectsData } from "./data/testProjects";
+import { userTasksStorage,userProjectStorage } from "./storage";
+
+
+
+
+const todoData = userTasksStorage.getStorage() 
+const projectData = userProjectStorage.getStorage() 
+
+const allTask = [];
+const allProjects = [];
 
 function app() {
-  
+  checkStorage();
   initSideNav();
   // displayProjects();
   initBtns();
@@ -23,10 +35,25 @@ function initTodo(items){
   filterByView('tasks',items)
 
 }
-app();
 
-// work on overdue,update project in form to match current project - DONE
-// complete and indicate if there is no task for the time period - DONE
-// If completed it should create a new container and show the completed ones below the todoContainer;.
-/* show description with show details and edit to populate 
- */
+
+function checkStorage(){
+  if (todoData.length > 0){
+    allTask.push(...todoData);
+  }
+  else{
+    allTask.push(...testTodos);
+    userTasksStorage.setStorage(allTask)
+  }
+
+  if (projectData.length > 0){
+    testProjectsData.push(...projectData);
+  }
+  else{
+    allProjects.push(...testProjectsData);
+    userProjectStorage.setStorage(allProjects)
+  }
+
+}
+
+app();

@@ -1,5 +1,5 @@
 export let currentView = null;
-let currTaskMsg = "All Tasks";
+let currTaskMsg = "ALL TASKS";
 
 export function setView(view){
     currentView = view;
@@ -8,7 +8,7 @@ export function setView(view){
 }
 
 export function getCurrentView(){
-    console.log(`current get view - ${currentView}`)
+    // console.log(`current get view - ${currentView}`)
 
     return currentView;
 }
@@ -40,9 +40,9 @@ export function getCurrentPeriod(){
 
 
 export function setCurrTaskView(text){
-    currTaskMsg = text;
+    currTaskMsg = text.toUpperCase();
 }
 
 export function getCurrentViewMsg(){
-    return currTaskMsg.toUpperCase();
+    return currTaskMsg;
 }

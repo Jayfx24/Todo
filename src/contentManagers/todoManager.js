@@ -1,4 +1,4 @@
-import { allTask } from "../todos";
+// import { allUserTask } from "../todos";
 import { testTodos } from "../data/testTodos";
 import { filterByView, projectFilter } from "../contentFilter";
 import { todoItem } from "../todos";
@@ -10,8 +10,11 @@ import {
 } from "../statusChecker";
 import { getToday, dueDays, formattedDate } from "../dateUtility";
 import { icons } from "../assets/icons";
+import { userTasksStorage } from "../storage";
 
+const allUserTask = userTasksStorage.getStorage();
 
+// ENSURE TO CLOSE SUBDIV IF CLICK OUTSIDE
 const todoDialog = document.getElementById("todoDialog");
 const todoContainer = document.querySelector(".todo-container");
 const aside = document.querySelector("#sidebar");
@@ -23,6 +26,8 @@ const completedDivText = document.createElement("h2");
 const todoNav = document.createElement("div");
 const showCurr = document.querySelector('.show-view')
 const showCurrText = document.createElement('p')
+let isUpdatingForm = false;
+
 
 todoDiv.className = "todo-div"
 completedDiv.className = "completed-div";
@@ -34,7 +39,7 @@ todoNav.classList.add("todo-nav");
 todoDivText.textContent = "Active";
 completedDivText.textContent = 'Completed'
 
-allTask.push(...testTodos);
+// allUserTask.push(...testTodos);
 
 
 export function displayTodo(items) {
@@ -48,7 +53,7 @@ export function displayTodo(items) {
 
   if (uncompleted.length === 0) {
     const noTaskContainer = showNoTask();
-    console.log(noTaskContainer)
+    // console.log(noTaskContainer)
     todoDiv.appendChild(noTaskContainer);
     // showNoTask();
   }
@@ -77,7 +82,7 @@ export function displayTodo(items) {
   todoContainer.appendChild(completedDiv);
 
   if (currView !== 'overdue'){
-    console.log(currView);
+    // console.log(currView);
     todoContainer.appendChild(completedDiv);
   }
   else{
@@ -103,7 +108,7 @@ if (div) {
 
   const container = document.createElement("div");
   const p = document.createElement("p");
-  console.log('clearing')
+  // console.log('clearing')
 
   const view = getCurrentPeriod();
 
@@ -125,106 +130,120 @@ function createTodoDOM(items, parent) {
     const dueDate = document.createElement("p");
     const createdAt = document.createElement("p");
     const projectType = document.createElement("p");
-    const checkboxLabel = document.createElement("label");
+   
     const checkboxInput = document.createElement("input");
-
+    const subTask = document.createElement('button');
+    const editSpan = document.createElement("span");
+    const overdue = document.createElement('p');
+    const deleteSvgWrapper = document.createElement('span');
+    const deleteSvg = document.createElement('span');
+    const deleteHoverSvg = document.createElement('span');
+    const options = document.createElement('span')
+    const completeSvgWrapper = document.createElement('span')
     // classes
+
+    todoWrapper.classList.add("todo-wrap");
+    todoMainDiv.classList.add("todo-main");
+    options.classList.add('todo-options')
     subDiv.className = 'hide';
-    subContent.className = 'sub-con';
-    // subDiv.className = 'sub-div';
-    checkboxDiv.className = "checkbox-wrapper";
-    checkboxInput.className = "checkbox-input";
-    todoWrapper.className = "todo-wrap";
-    todoMainDiv.className = "todo-main";
-    
-    checkboxInput.checked = todo.status === true;
+    subContent.classList.add('sub-con');
+    // subTask.classList.add('hide');
+    checkboxDiv.classList.add("checkbox-wrapper");
+    desc.classList.add('desc');
+    createdAt.classList.add('created-at');
+    projectType.classList.add('project-type');
+    completeSvgWrapper.classList.add('complete-svg');
+    checkboxInput.classList.add("checkbox-input");
+    editSpan.classList.add("edit");
+    deleteSvgWrapper.classList.add('delete-wrapper');
+    deleteSvg.classList.add('delete-todo');
+    deleteHoverSvg.classList.add('delete-hover');
+
     title.className = 'title'
     dueDate.className = 'due-date'
-
+    // IDs
+    subTask.id = 'subDivBtn'; 
+    // TextContents
     title.textContent = todo["title"];
     desc.textContent = todo["desc"];
     dueDate.textContent = todo["dueDate"];
     createdAt.textContent = todo["createdAt"];
-    projectType.textContent = todo["projectType"];
+    projectType.textContent = todo["project"].toUpperCase();
+    subTask.textContent = "Details";
+   
+    editSpan.innerHTML = icons.edit;
+    
+    
+    // Attributes
+    
+    completeSvgWrapper.setAttribute("data-id", todo.uuid);
+    editSpan.setAttribute("data-id", todo.uuid);
+    deleteSvgWrapper.dataset.id = todo.uuid;
+    
+    // innerHTML
+    completeSvgWrapper.innerHTML = todo.status ? icons.completed:icons.complete;
+    deleteSvg.innerHTML = icons.delete;
+    deleteHoverSvg.innerHTML = icons.deleteHover;
+
     
 
-    // summary
-    const subTask = document.createElement('button');
-    subTask.textContent = "Details";
-    subTask.id = 'subDivBtn'; 
-
-    const editBtn = document.createElement("button");
-    checkboxLabel.textContent = "completed?"
-    checkboxInput.setAttribute("type", "checkbox");
-    checkboxInput.setAttribute("data-id", todo.uuid);
-    // checkboxInput.setAttribute("id", todo.uuid);
-    checkboxLabel.setAttribute('for',todo.uuid);
-    editBtn.textContent = "Edit";
-    editBtn.className = "edit";
-    editBtn.setAttribute("data-id", todo.uuid);
-
-
-
-    // CREATE SUB DIV
+   
 
     // event listeners
     subTask.addEventListener('click',()=>{
       subDiv.classList.toggle('sub-div');
       subDiv.classList.toggle('hide');
+      
 
     })
 
-    editBtn.addEventListener("click", (e) => {
-      console.log();
-      const id = e.target.dataset.id;
+    editSpan.addEventListener("click", (e) => {
+
+      const wrapper = e.target.closest('[data-id]');
+      if (!wrapper) return;
+      const id = wrapper.dataset.id
+      
       populateForm(id);
       getAddForm();
+      isUpdatingForm = false;
+      todo.showSubDiv = false;
+      console.log(todo)
+      
+
     });
 
     // overdue
-    const overdue = document.createElement('p');
   
     if (todo.dueDate < getToday()){
+      // console.log('Due date:', todo);
       overdue.textContent = `Overdue: ${dueDays(todo.dueDate)}`
       overdue.classList.add('overdueTasks')
-      console.log(dueDate.textContent)
+      // console.log(dueDate.textContent)
 
     }
     else{
       overdue.classList.add('hide');
-      console.log(dueDate.textContent)
+      // console.log(dueDate.textContent)
     }
-
-    // delete
-    const deleteSvgWrapper = document.createElement('span');
-    const deleteSvg = document.createElement('span');
-    const deleteHoverSvg = document.createElement('span');
-    deleteSvgWrapper.className = 'delete-wrapper';
-    deleteSvg.className = 'delete-todo';
-    deleteHoverSvg.className = 'delete-hover';
-    deleteSvgWrapper.dataset.id = todo.uuid;
-    
-    deleteSvg.innerHTML = icons.delete;
-    deleteHoverSvg.innerHTML = icons.deleteHover;
 
 
     
     deleteSvgWrapper.appendChild(deleteSvg);
     deleteSvgWrapper.appendChild(deleteHoverSvg);
-    checkboxDiv.appendChild(checkboxLabel);
-    checkboxDiv.appendChild(checkboxInput);
+    
+    todoMainDiv.appendChild(completeSvgWrapper);
+    options.appendChild(editSpan);
+    options.appendChild(deleteSvgWrapper);
+   
     todoMainDiv.appendChild(title);
-    // todoMainDiv.appendChild(desc);
     todoMainDiv.appendChild(dueDate);
     todoMainDiv.appendChild(subTask);
-    todoMainDiv.appendChild(checkboxDiv);
-    todoMainDiv.appendChild(editBtn);
-    todoMainDiv.appendChild(deleteSvgWrapper);
     
-    subContent.appendChild(desc);
     subContent.appendChild(createdAt);
     subContent.appendChild(projectType);
     subContent.appendChild(overdue);
+    subContent.appendChild(options);
+    subDiv.appendChild(desc);
     subDiv.appendChild(subContent)
     todoWrapper.appendChild(todoMainDiv);
     todoWrapper.appendChild(subDiv);
@@ -238,10 +257,13 @@ function createTodoDOM(items, parent) {
 export function getAddForm() {
   const todoForm = document.getElementById("todoForm");
 
+  if (!isUpdatingForm){
+    todoForm.reset();
+  }
   todoForm.addEventListener("submit", (e) => {
     e.preventDefault();
+    
     const id = todoForm.elements["uuid"].value;
-
     const formData = new FormData(todoForm);
     let title = formData.get("title");
     let desc = formData.get("desc");
@@ -249,55 +271,62 @@ export function getAddForm() {
     let priority = formData.get("priority");
     let project = formData.get("project");
 
-    if (id) {
-      const index = allTask.findIndex((item) => item.uuid === id);
-      console.table(allTask[index]);
+    if (id ) {
+      const index = allUserTask.findIndex((item) => item.uuid === id);
+      
+      allUserTask[index].showSubDiv = true;
+     
 
       if (title && desc && dueDate && priority && project) {
-        allTask[index] = {
-          ...allTask[index],
+        // console.log(allUserTask[index]);
+
+        allUserTask[index] = {
+          ...allUserTask[index],
           title,
           desc,
           dueDate,
           priority,
           project,
         };
-        console.table(allTask[index]);
+        // console.table(allUserTask[index]);
       } else {
         return;
       }
     } 
     else {
       const newItem = todoItem(title, desc, dueDate, priority, project);
-      allTask.push(newItem);
+      allUserTask.push(newItem);
     }
-    const view = getCurrentView();
-    console.log(`passed view - ${view}`);
-    const list = filterByView(view, allTask);
-    displayTodo(list);
-
-    todoDialog.close();
+    
+    refreshDisplay()
+   
     todoForm.reset();
+    todoDialog.close();
   });
+  
 }
 
 function handleStatusChange(items) {
-  const checkboxes = document.querySelectorAll(".checkbox-input");
+  const checkboxes = document.querySelectorAll(".complete-svg");
+  
 
   checkboxes.forEach((checkbox) => {
-    checkbox.addEventListener("change", () => {
-      const status = checkbox.checked;
-      const id = checkbox.getAttribute("data-id");
-      updateStatus(id, status, items);
+    checkbox.addEventListener("click", (e) => {
+      const wrapper = e.target.closest('[data-id]');
+      if (!wrapper) return;
+
+      const id = wrapper.dataset.id
+      // checkbox.innerHTML = '';
+      updateStatus(id, items);
     });
   });
 }
 
-function updateStatus(id, status, items) {
+function updateStatus(id, items) {
   const taskToUpdate = items.find((item) => item.uuid === id);
 
   if (taskToUpdate) {
-    taskToUpdate.status = status;
+    taskToUpdate.status = !taskToUpdate.status;
     displayTodo(items);
   }
 }
@@ -310,36 +339,33 @@ export function deleteTodoItem(){
 
       const wrapper = e.target.closest('[data-id]');
       const id = wrapper.dataset.id;
-      const index = allTask.findIndex(task => task.uuid === id);
+      const index = allUserTask.findIndex(task => task.uuid === id);
       if (index !== -1) {
-        allTask.splice(index, 1); 
+        allUserTask.splice(index, 1); 
       }
-      console.table(allTask)
+     
 
-
-      const view = getCurrentView();
-      console.log(`passed view - ${view}`);
-      const list = filterByView(view, allTask);
-      displayTodo(list);
+      refreshDisplay();
     })
   })
 
 }
 export function populateForm(id) {
-  console.log("here");
-
-  const todoData = allTask.find((item) => item["uuid"] === id);
-  const todoForm = document.getElementById("todoForm");
+  if (id){
+    const todoData = allUserTask.find((item) => item["uuid"] === id);
+    const todoForm = document.getElementById("todoForm");
+    
   
-
-  todoForm.elements["title"].value = todoData["title"];
-  todoForm.elements["desc"].value = todoData["desc"];
-  todoForm.elements["dueDate"].value = todoData["dueDate"];
-  todoForm.elements["project"].value = todoData["project"];
-  todoForm.elements["priority"].value = todoData["priority"].toLowerCase();
-  todoForm.elements["uuid"].value = id;
-
-  todoDialog.showModal();
+    todoForm.elements["title"].value = todoData["title"];
+    todoForm.elements["desc"].value = todoData["desc"];
+    todoForm.elements["dueDate"].value = todoData["dueDate"];
+    todoForm.elements["project"].value = todoData["project"];
+    todoForm.elements["priority"].value = todoData["priority"].toLowerCase();
+    todoForm.elements["uuid"].value = id;
+  
+    isUpdatingForm = true;
+    todoDialog.showModal();
+  }
 }
 
 export function displayTodoNav() {
@@ -347,7 +373,7 @@ export function displayTodoNav() {
     { id: "tasks", text: "Tasks" },
     { id: "today", text: "Today" },
     { id: "week", text: "This Week" },
-    // { id: "allTask", text: "All Tasks" },
+    // { id: "allUserTask", text: "All Tasks" },
     { id: "upcoming", text: "Upcoming" },
     { id: "overdue", text: "Overdue" },
   ];
@@ -363,7 +389,7 @@ export function displayTodoNav() {
     btn.classList.add("sidebar_button");
     btn.id = button.id;
     svgWrapper.innerHTML = `${icons[button.id]}`;
-    textWrapper.innerHTML = `${button.text}`;
+    textWrapper.innerHTML = `${button.text.toUpperCase()}`;
 
     btn.appendChild(svgWrapper)
     btn.appendChild(textWrapper)
@@ -381,17 +407,15 @@ export function displayTodoNav() {
     if (!button) return; 
 
     let targetId = button.id;
-    const filtered = filterByView(targetId, allTask);
+    const filtered = filterByView(targetId, allUserTask);
     displayTodo(filtered);
   });
 }
 
 function displayCurrentView(){
-  // show curr task/project view
 
-  
   const currView = getCurrentViewMsg();
-  console.log(`dialog ${currView}`)
+  // console.log(`dialog ${currView}`)
 
   showCurr.innerHTML = `${icons.view}<span>${currView}</span>`;
   showCurr.className = "show-view";
@@ -399,3 +423,13 @@ function displayCurrentView(){
  
   
 }
+
+function refreshDisplay(){
+  userTasksStorage.setStorage(allUserTask);
+
+  const view = getCurrentView();
+  const list = filterByView(view, allUserTask);
+    // console.log(`passed view - ${view}`);
+    displayTodo(list);
+} 
+

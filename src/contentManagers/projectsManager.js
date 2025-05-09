@@ -1,12 +1,13 @@
-import { testProjectsData } from "../data/testProjects";
-import { allProjects } from "../projects";
-import { allTask } from "../todos";
+// import { allProjects } from "../index";
 import { projectFilter } from "../contentFilter";
 import { newProject } from "../projects";
 import { setProjectView, setView } from "../statusChecker";
 import { displayTodo } from "./todoManager";
 import { icons } from "../assets/icons";
+import { userTasksStorage, userProjectStorage } from "../storage";
 
+
+let allProjects = [];
 const aside = document.querySelector('#sidebar')
 const projectNav = document.createElement('div');
 const projectUl = document.createElement('ul')
@@ -14,10 +15,10 @@ const projectUl = document.createElement('ul')
 projectNav.className = 'project-nav';
 projectUl.className = 'project-list'
 
-allProjects.push(...testProjectsData);
 
 
 export function displayProjects() {
+  allProjects = userProjectStorage.getStorage() ;
   createProjects(allProjects);
   projectBtns();
 }
@@ -52,40 +53,47 @@ function createProjects(items) {
 function projectBtns() {
   const projectUl = document.querySelector('.project-list');
 
-  // projectNav.appendChild(projectUl);
-  projectUl.addEventListener('click',(e) =>{
-    if (e.target.tagName === 'BUTTON'){
 
-      const pName = e.target.name;
-      setProjectView(pName);
+  projectUl.addEventListener('click',(e) =>{
+    const button = e.target.closest("button");
+    if (!button) return; 
+    
+      const data = userTasksStorage.getStorage()
+      const pName = button.name;
+      const projectTodos = projectFilter(data,pName);
+
       setView(pName);
-      const projectTodos = projectFilter(allTask,pName);
       displayTodo(projectTodos);
     }
     
     
-  })
+  )
 }
 
 export function getProjectForm(){
   console.log('here')
 
-  const pf = document.getElementById('projectForm')
-  const pd = document.getElementById('projectDialog')
+  const pf = document.getElementById('projectForm');
+  const pd = document.getElementById('projectDialog');
+
 
   pf.addEventListener('submit',(e)=>{
     e.preventDefault()
 
-    const formData = new FormData(pf)
+    const formData = new FormData(pf);
 
-    const pName = formData.get('projectFormName')
-
-    allProjects.push(newProject(pName));
+    const pName = formData.get('projectFormName');
+    if (pName){
+      
+      allProjects.push(newProject(pName));
+      userProjectStorage.setStorage(allProjects)
+      console.table(allProjects);
+    }
     
-    displayProjects()
-
-    pf.reset()
-    pd.close()
+    
+    pf.reset();
+    pd.close();
+    displayProjects();
     })
 
     

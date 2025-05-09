@@ -1,7 +1,5 @@
 import { getToday, getEndOfWeek, getStartOfWeek } from './dateUtility';
-import { displayTodo } from './contentManagers/todoManager';
-import { setView,setViewText, setCurrTaskView } from './statusChecker';
-import { allTask } from './todos';
+import { setView,setViewText, setCurrTaskView, setProjectView } from './statusChecker';
 
 // const  currProjectView = getProjectCurrentView();
 const taskMessages = {
@@ -83,9 +81,10 @@ export function allTodoTasks(items){
 
 export function projectFilter(items,name){
     const projectTodos = items.filter(item => item['project'] === name);
-    setCurrTaskView(name);
     const message = getRandomMessage(name)
+    setCurrTaskView(name);
     setViewText(message);
+    setProjectView(name);
     return projectTodos;
 
 }

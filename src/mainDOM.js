@@ -1,8 +1,12 @@
-import { allProjects } from "./projects";
+
 import { getProjectCurrentView } from "./statusChecker";
-import { icons } from "./assets/icons";
+import { userProjectStorage } from "./storage";
+
+
+
 
 export function createTodoForm(ele) {
+  const allProjects = userProjectStorage.getStorage() ;
   const form = document.createElement("form");
   form.id = "todoForm";
 
@@ -38,14 +42,15 @@ export function createTodoForm(ele) {
   
   // Due Date
   const dueDateGroup = document.createElement("div");
-  dueDateGroup.className = "form-group";
   const dueDateLabel = document.createElement("label");
+  const dueDateInput = document.createElement("input");
+  dueDateGroup.className = "form-group";
   dueDateLabel.setAttribute("for", "dueDate");
   dueDateLabel.textContent = "Due Date";
-  const dueDateInput = document.createElement("input");
   dueDateInput.type = "date";
   dueDateInput.id = "dueDate";
   dueDateInput.name = "dueDate";
+  dueDateInput.required = true;
   dueDateGroup.appendChild(dueDateLabel);
   dueDateGroup.appendChild(dueDateInput);
 
@@ -58,6 +63,7 @@ export function createTodoForm(ele) {
 
   const updatedArr = currPView(allProjects)
   console.log(updatedArr)
+  console.log('updatedArr')
   updatedArr.forEach((item) => {
       const option = document.createElement("option");
       const name = item.name;
@@ -162,6 +168,8 @@ export function createProjectForm(ele) {
 function currPView(allProjects){
   const view = getProjectCurrentView().toLowerCase();
   const updatedArr = [allProjects.find(item => item['name'] === view),...allProjects.filter(item => item['name'] != view)];
+  console.log(`here - ${view}`)
+
   console.log(updatedArr)
   return updatedArr;
 }
