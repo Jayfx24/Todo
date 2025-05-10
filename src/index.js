@@ -5,7 +5,7 @@ import {  initSideNav } from "./nav/sideNavs";
 import { initBtns } from "./contentManagers/dialogManager";
 // import { allTask } from "./todos";
 import { filterByView } from "./contentFilter";
-import { allTodoTasks } from "./contentFilter";
+import { navigationBtns } from "./nav/buttons";
 import { testTodos } from "./data/testTodos";
 import { testProjectsData } from "./data/testProjects";
 import { userTasksStorage,userProjectStorage } from "./storage";
@@ -21,8 +21,8 @@ const allProjects = [];
 
 function app() {
   checkStorage();
+  
   initSideNav();
-  // displayProjects();
   initBtns();
   initTodo(allTask)
   

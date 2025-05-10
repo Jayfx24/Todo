@@ -5,7 +5,7 @@ import { setProjectView, setView } from "../statusChecker";
 import { displayTodo } from "./todoManager";
 import { icons } from "../assets/icons";
 import { userTasksStorage, userProjectStorage } from "../storage";
-
+import { getCurrentView } from "../statusChecker";
 
 let allProjects = [];
 const aside = document.querySelector('#sidebar')
@@ -64,6 +64,7 @@ function projectBtns() {
 
       setView(pName);
       displayTodo(projectTodos);
+     
     }
     
     

@@ -8,7 +8,7 @@ export function setView(view){
 }
 
 export function getCurrentView(){
-    // console.log(`current get view - ${currentView}`)
+    console.log(`current get view - ${currentView}`)
 
     return currentView;
 }

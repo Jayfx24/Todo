@@ -4,18 +4,21 @@ import { getProjectForm } from "./projectsManager"
 import { createTodoForm,createProjectForm } from "../mainDOM"
 import { getCurrentView } from "../statusChecker"
 import { icons } from "../assets/icons"
+import { vi } from "date-fns/locale"
+
+
+
+// editProjectBtn.textContent = "Edit";
 
 
 const addTodoBtn = document.getElementById('addTodo')
 const addProjectBtn = document.getElementById('addProject')
 const todoDialog = document.getElementById('todoDialog')
 const projectDialog = document.getElementById('projectDialog')
-// const todoForm = document.getElementById('todoForm')
-// const dialogs = document.querySelectorAll('dialog')
-
 
 
 export function initBtns(){
+    
     setupTodoDialog();
 
     addTodoBtn.addEventListener('click',()=>{
@@ -65,3 +68,5 @@ function createCloseSvg(dialog) {
     closeSvgWrapper.addEventListener('click',()=>{
         dialog.close();
     })}
+
+    
