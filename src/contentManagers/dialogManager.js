@@ -1,25 +1,19 @@
 
-import {getAddForm, populateForm } from "./todoManager"
+import {getAddForm } from "./todoManager"
 import { getProjectForm } from "./projectsManager"
 import { createTodoForm,createProjectForm } from "../mainDOM"
-import { getCurrentView } from "../statusChecker"
 import { icons } from "../assets/icons"
-import { vi } from "date-fns/locale"
 
 
-
-// editProjectBtn.textContent = "Edit";
-
-
-const addTodoBtn = document.getElementById('addTodo')
-const addProjectBtn = document.getElementById('addProject')
-const todoDialog = document.getElementById('todoDialog')
-const projectDialog = document.getElementById('projectDialog')
-
+const addTodoBtn = document.getElementById('addTodo');
+const addProjectBtn = document.getElementById('addProject');
+const todoDialog = document.getElementById('todoDialog');
+const projectDialog = document.getElementById('projectDialog');
 
 export function initBtns(){
     
-    setupTodoDialog();
+    setupTodoDialog()
+    setupProjectEditListener();
 
     addTodoBtn.addEventListener('click',()=>{
         setupTodoDialog();
@@ -34,6 +28,7 @@ export function initBtns(){
         getProjectForm();
     });
 
+    
 }
 
 function setupTodoDialog(){
@@ -70,3 +65,16 @@ function createCloseSvg(dialog) {
     })}
 
     
+export function setupProjectEditListener() {
+    const projectEdit = document.querySelector(".project-edit");
+    
+    if (projectEdit) {
+        projectEdit.addEventListener("click", () => {
+        console.log("Edit icon clicked");
+        projectDialog.showModal();
+        setupProjectDialog();
+        getProjectForm();
+        });
+    }
+      }
+      

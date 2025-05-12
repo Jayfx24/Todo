@@ -20,8 +20,8 @@ const allTask = [];
 const allProjects = [];
 
 function app() {
+ 
   checkStorage();
-  
   initSideNav();
   initBtns();
   initTodo(allTask)

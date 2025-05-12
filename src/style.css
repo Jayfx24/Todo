@@ -155,6 +155,11 @@ li button{
 .sidebar_button:hover{
   background-color: var(--primary-hover);
 }
+
+.sidebar_button:focus{
+  background-color: var(--primary-hover);
+  
+}
 .project-nav-btn:hover{
   background-color: green;
 }

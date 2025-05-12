@@ -1,12 +1,18 @@
 
-import { getProjectCurrentView } from "./statusChecker";
-import { userProjectStorage } from "./storage";
+import { getProjectCurrentView, getCurrentViewMsg, getCurrentView,setCurrTaskView, setProjectView, setView } from "./statusChecker";
+import { userProjectStorage, userTasksStorage } from "./storage";
+import { icons } from "./assets/icons";
+import { initSideNav } from "./nav/sideNavs";
+import { displayProjects } from "./contentManagers/projectsManager";
+import { setAndRefreshDisplay} from "./contentManagers/todoManager";
 
+const elements = {
+  showCurrentView: document.querySelector(".show-view"),
 
+}
 
 
 export function createTodoForm(ele) {
-  const allProjects = userProjectStorage.getStorage() ;
   const form = document.createElement("form");
   form.id = "todoForm";
 
@@ -61,7 +67,7 @@ export function createTodoForm(ele) {
   const select = document.createElement("select");
   select.name = 'project'
 
-  const updatedArr = currPView(allProjects)
+  const updatedArr = currPView()
   console.log(updatedArr)
   console.log('updatedArr')
   updatedArr.forEach((item) => {
@@ -165,7 +171,9 @@ export function createProjectForm(ele) {
 
 }
 
-function currPView(allProjects){
+function currPView(){
+  const allProjects = userProjectStorage.getStorage() ;
+
   const view = getProjectCurrentView().toLowerCase();
   const updatedArr = [allProjects.find(item => item['name'] === view),...allProjects.filter(item => item['name'] != view)];
   console.log(`here - ${view}`)
@@ -173,3 +181,105 @@ function currPView(allProjects){
   console.log(updatedArr)
   return updatedArr;
 }
+
+export function displayCurrentView() {
+  const currViewMsg = getCurrentViewMsg();
+  const currentView = getCurrentView();
+  const views = ['tasks','today','week','upcoming','overdue','personal',null]
+ 
+  console.log(currViewMsg)
+
+  if(!views.includes(currentView)){
+    elements.showCurrentView.innerHTML = `${icons.view}<span class="edit-con"> <span class="current-view">${currViewMsg}</span><span class="project-edit">${icons.edit}</span></span>`;
+    projectListeners();
+  }
+  else{
+    elements.showCurrentView.innerHTML = `${icons.view}<span >${currViewMsg}</span>`;
+  }
+  elements.showCurrentView.className = "show-view";
+}
+
+function projectListeners(){
+const showView = document.querySelector('.edit-con'); 
+const title =document.querySelector('.current-view');
+const titleHolder = title.textContent.trim().toLowerCase();
+  showView.addEventListener('click', ()=>{
+    const projects = userProjectStorage.getStorage();
+    const tasks = userTasksStorage.getStorage();
+     title.contentEditable = "true"
+     title.focus();
+
+     title.classList.add("editing-project");
+
+     
+     title.addEventListener("blur", ()=>{
+       const newTitle = title.textContent.trim() || "Untitled";
+       const updatedTitle = newTitle.toLowerCase();
+      
+       
+       const project = projects.find(item => item.name === titleHolder);
+       const projectHolder = project.name;
+      if (project){
+        project.name = updatedTitle;
+      }
+
+      tasks.forEach(item => {
+        if (item.project === projectHolder) {
+          item.project = updatedTitle;
+        }
+      });
+
+      // Don't Touch
+      setView(updatedTitle)
+      setCurrTaskView(updatedTitle);
+      setProjectView(updatedTitle);
+      userProjectStorage.setStorage(projects);
+      setAndRefreshDisplay(tasks);
+      displayCurrentView();
+      displayProjects()
+      
+      title.contentEditable = "false"
+      title.classList.remove("editing-project");
+
+
+    });
+    title.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") title.blur();
+    });
+        
+    })
+      
+  
+}
+
+// function projectListeners(){
+//   const title =document.querySelector('.current-view')
+//   const projectDialog = document.getElementById('projectDialog');
+//    const projectEdit = document.querySelector(".project-edit");
+//     projectEdit.addEventListener('click', ()=>{
+//        const input = document.createElement('input');
+//        const titleText  = title.textContent;
+//        input.value = titleText;
+//        input.className = 'project-input'
+  
+//        title.replaceWith(input)
+//        input.focus();
+  
+  
+//       input.addEventListener("blur", ()=>{
+//         const newTitle = input.value.trim() || "Untitled";
+//         const newSpan = document.createElement("span");
+//         newSpan.textContent = newTitle;
+//         newSpan.className = "current-view";
+//         input.replaceWith(newSpan);
+  
+//         // displayCurrentView();
+//       });
+//       input.addEventListener("keydown", (e) => {
+//         if (e.key === "Enter") input.blur();
+//       });
+          
+//       })
+        
+    
+//   }

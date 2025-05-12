@@ -7,7 +7,8 @@ import { displayProjects } from '../contentManagers/projectsManager';
 
 
 export function initSideNav (){
-    
+// const sidebar = document.getElementById("sidebar")
+//     sidebar.innerHTML =''
     displayTodoNav();
     displayProjects()
 
