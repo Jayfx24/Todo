@@ -1,11 +1,9 @@
 import "./style.css";
 import { displayProjects } from "./contentManagers/projectsManager";
 import { displayTodo,deleteTodoItem } from "./contentManagers/todoManager";
-import {  initSideNav } from "./nav/sideNavs";
+import {  initSideNav } from "./nav/navigation";
 import { initBtns } from "./contentManagers/dialogManager";
-// import { allTask } from "./todos";
 import { filterByView } from "./contentFilter";
-import { navigationBtns } from "./nav/buttons";
 import { testTodos } from "./data/testTodos";
 import { testProjectsData } from "./data/testProjects";
 import { userTasksStorage,userProjectStorage } from "./storage";
@@ -32,7 +30,12 @@ function app() {
 function initTodo(items){
   displayTodo(items)
   deleteTodoItem();
+  
   filterByView('tasks',items)
+ 
+    // deleteProject();
+
+  
 
 }
 

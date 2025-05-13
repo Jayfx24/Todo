@@ -4,7 +4,6 @@ import { getProjectForm } from "./projectsManager"
 import { createTodoForm,createProjectForm } from "../mainDOM"
 import { icons } from "../assets/icons"
 
-
 const addTodoBtn = document.getElementById('addTodo');
 const addProjectBtn = document.getElementById('addProject');
 const todoDialog = document.getElementById('todoDialog');

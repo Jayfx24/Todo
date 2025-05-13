@@ -10,13 +10,14 @@ import { icons } from "../assets/icons";
 import { userTasksStorage } from "../storage";
 import { displayCurrentView } from "../mainDOM";
 
-const elements = {
+export const elements = {
   todoDialog: document.getElementById("todoDialog"),
   todoContainer: document.querySelector(".todo-container"),
   sidebar: document.querySelector("#sidebar"),
+  delProjectBtn : document.getElementById('deleteProject'),
 };
 
-const components = {
+export const components = {
   sidebarNav: document.createElement("ul"),
   todoDiv: document.createElement("div"),
   completedDiv: document.createElement("div"),
@@ -34,7 +35,7 @@ components.todoNav.classList.add("todo-nav");
 components.todoDivText.textContent = "Active";
 components.completedDivText.textContent = "Completed";
 
-const allUserTask = userTasksStorage.getStorage();
+let allUserTask = userTasksStorage.getStorage();
 let isUpdatingForm = false;
 
 export function displayTodo(items) {
@@ -82,7 +83,7 @@ export function displayTodo(items) {
     }
   }
 
-  handleStatusChange(items);
+  handleStatusChange();
   displayCurrentView();
   deleteTodoItem();
 }
@@ -127,6 +128,8 @@ function createTodoDOM(items, parent) {
     todoMainDiv.classList.add("todo-main");
     options.classList.add("todo-options");
     subDiv.className = "hide";
+   
+
     subContent.classList.add("sub-con");
     // subTask.classList.add('hide');
     checkboxDiv.classList.add("checkbox-wrapper");
@@ -187,12 +190,14 @@ function createTodoDOM(items, parent) {
 
     // overdue
 
-    if (todo.dueDate < getToday()) {
+    if (todo.dueDate < getToday() && !todo.status) {
       // console.log('Due date:', todo);
       overdue.textContent = `Overdue: ${dueDays(todo.dueDate)}`;
       overdue.classList.add("overdueTasks");
       // console.log(dueDate.textContent)
-    } else {
+    } 
+    
+    else {
       overdue.classList.add("hide");
       // console.log(dueDate.textContent)
     }
@@ -220,7 +225,7 @@ function createTodoDOM(items, parent) {
   }
 }
 
-function handleStatusChange(items) {
+function handleStatusChange() {
   const checkboxes = document.querySelectorAll(".complete-svg");
 
   checkboxes.forEach((checkbox) => {
@@ -230,13 +235,14 @@ function handleStatusChange(items) {
 
       const id = wrapper.dataset.id;
       // checkbox.innerHTML = '';
-      updateStatus(id, items);
+      updateStatus(id);
     });
   });
 }
 
-function updateStatus(id, items) {
-  const taskToUpdate = items.find((item) => item.uuid === id);
+function updateStatus(id) {
+  allUserTask = userTasksStorage.getStorage();
+  const taskToUpdate = allUserTask.find((item) => item.uuid === id);
 
   if (taskToUpdate) {
     taskToUpdate.status = !taskToUpdate.status;
@@ -245,6 +251,8 @@ function updateStatus(id, items) {
 }
 
 export function deleteTodoItem() {
+  allUserTask = userTasksStorage.getStorage();
+
   const deleteIcons = document.querySelectorAll(".delete-wrapper");
   deleteIcons.forEach((item) => {
     item.addEventListener("click", (e) => {
@@ -275,6 +283,8 @@ export function getAddForm() {
     let dueDate = formData.get("dueDate");
     let priority = formData.get("priority");
     let project = formData.get("project");
+
+    allUserTask = userTasksStorage.getStorage()
 
     if (id) {
       const index = allUserTask.findIndex((item) => item.uuid === id);
@@ -309,6 +319,7 @@ export function getAddForm() {
 }
 
 export function populateForm(id) {
+  allUserTask = userTasksStorage.getStorage();
   if (id) {
     const todoData = allUserTask.find((item) => item["uuid"] === id);
     const todoForm = document.getElementById("todoForm");
@@ -325,55 +336,55 @@ export function populateForm(id) {
   }
 }
 
-export function displayTodoNav() {
-  const buttons = [
-    { id: "tasks", text: "Tasks" },
-    { id: "today", text: "Today" },
-    { id: "week", text: "This Week" },
-    // { id: "allUserTask", text: "All Tasks" },
-    { id: "upcoming", text: "Upcoming" },
-    { id: "overdue", text: "Overdue" },
-  ];
+// export function displayTodoNav() {
+//   const buttons = [
+//     { id: "tasks", text: "Tasks" },
+//     { id: "today", text: "Today" },
+//     { id: "week", text: "This Week" },
+//     // { id: "allUserTask", text: "All Tasks" },
+//     { id: "upcoming", text: "Upcoming" },
+//     { id: "overdue", text: "Overdue" },
+//   ];
 
-  buttons.forEach((button) => {
-    const li = document.createElement("li");
-    const svgWrapper = document.createElement("span");
-    const textWrapper = document.createElement("span");
-    const btn = document.createElement("button");
-    li.classList.add("sidebar_item");
+//   buttons.forEach((button) => {
+//     const li = document.createElement("li");
+//     const svgWrapper = document.createElement("span");
+//     const textWrapper = document.createElement("span");
+//     const btn = document.createElement("button");
+//     li.classList.add("sidebar_item");
 
-    svgWrapper.classList.add("btn-wrapper");
-    btn.classList.add("sidebar_button");
-    btn.id = button.id;
-    svgWrapper.innerHTML = `${icons[button.id]}`;
-    textWrapper.innerHTML = `${button.text.toUpperCase()}`;
+//     svgWrapper.classList.add("btn-wrapper");
+//     btn.classList.add("sidebar_button");
+//     btn.id = button.id;
+//     svgWrapper.innerHTML = `${icons[button.id]}`;
+//     textWrapper.innerHTML = `${button.text.toUpperCase()}`;
 
-    btn.appendChild(svgWrapper);
-    btn.appendChild(textWrapper);
-    li.appendChild(btn);
-    components.sidebarNav.appendChild(li);
+//     btn.appendChild(svgWrapper);
+//     btn.appendChild(textWrapper);
+//     li.appendChild(btn);
+//     components.sidebarNav.appendChild(li);
 
-    components.todoNav.appendChild(components.sidebarNav);
+//     components.todoNav.appendChild(components.sidebarNav);
 
-    elements.sidebar.appendChild(components.todoNav);
-  });
-  components.sidebarNav.addEventListener("click", (e) => {
-    const button = e.target.closest("button");
-    if (!button) return;
+//     elements.sidebar.appendChild(components.todoNav);
+//   });
+//   components.sidebarNav.addEventListener("click", (e) => {
+//     const button = e.target.closest("button");
+//     if (!button) return;
 
-    let targetId = button.id;
-    const filtered = filterByView(targetId, allUserTask);
-    displayTodo(filtered);
-  });
-}
+//     let targetId = button.id;
+//     const filtered = filterByView(targetId, allUserTask);
+//     displayTodo(filtered);
+//   });
+// }
 
 
 
 export function setAndRefreshDisplay(arr) {
   userTasksStorage.setStorage(arr);
-
+  allUserTask = userTasksStorage.getStorage(); 
   const view = getCurrentView();
-  const list = filterByView(view, arr);
+  const list = filterByView(view, allUserTask);
   displayTodo(list);
 }
 

@@ -1,5 +1,10 @@
-export let currentView = null;
+let currentView = null;
 let currTaskMsg = "ALL TASKS";
+let currentProjectView = 'personal';
+let currentPeriodText;
+
+export const defaultViews = ['tasks','today','week','upcoming','overdue','personal',null]
+
 
 export function setView(view){
     currentView = view;
@@ -8,26 +13,24 @@ export function setView(view){
 }
 
 export function getCurrentView(){
-    console.log(`current get view - ${currentView}`)
-
+    
     return currentView;
 }
 
 
-let currentProjectView = 'personal';
 
 export function setProjectView(view){
     currentProjectView = view;
     console.log(currentProjectView);
-
-
+    
+    
 } 
 
 export function getProjectCurrentView(){
+    console.log(`current get view - ${currentProjectView}`)
     return currentProjectView;
 }
 
-let currentPeriodText;
 
 export function setViewText(text){
     currentPeriodText = text;
@@ -45,4 +48,12 @@ export function setCurrTaskView(text){
 
 export function getCurrentViewMsg(){
     return currTaskMsg;
+}
+
+export function setAllView(view){
+    currTaskMsg = view.toUpperCase();
+    currentView = view;
+    currentProjectView = view;
+
+
 }

@@ -90,9 +90,7 @@ main{
 
 }
 
-.add-todo{
 
-}
 .main-content{
   grid-column: 2;
   grid-row: 2;
@@ -233,10 +231,15 @@ svg{
   justify-content: space-between;
   align-items: end;
 }
-#addTodo, #addProject{
+#addTodo, #addProject, #deleteProject{
   border: var(--border);
   padding: 0.5rem 1rem;
   border-radius: var(--border-radius);
+}
+#deleteProject{
+  background-color: red;
+  color: white;
+  font-weight: 700;
 }
 
 .todo-container{

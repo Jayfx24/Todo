@@ -1,10 +1,8 @@
 
-import { getProjectCurrentView, getCurrentViewMsg, getCurrentView,setCurrTaskView, setProjectView, setView } from "./statusChecker";
-import { userProjectStorage, userTasksStorage } from "./storage";
+import { getProjectCurrentView, getCurrentViewMsg, getCurrentView} from "./statusChecker";
+import { userProjectStorage} from "./storage";
 import { icons } from "./assets/icons";
-import { initSideNav } from "./nav/sideNavs";
-import { displayProjects } from "./contentManagers/projectsManager";
-import { setAndRefreshDisplay} from "./contentManagers/todoManager";
+import {editProject,deleteProject } from "./contentManagers/projectsManager";
 
 const elements = {
   showCurrentView: document.querySelector(".show-view"),
@@ -191,7 +189,8 @@ export function displayCurrentView() {
 
   if(!views.includes(currentView)){
     elements.showCurrentView.innerHTML = `${icons.view}<span class="edit-con"> <span class="current-view">${currViewMsg}</span><span class="project-edit">${icons.edit}</span></span>`;
-    projectListeners();
+    editProject();
+    // deleteProject();
   }
   else{
     elements.showCurrentView.innerHTML = `${icons.view}<span >${currViewMsg}</span>`;
@@ -199,60 +198,9 @@ export function displayCurrentView() {
   elements.showCurrentView.className = "show-view";
 }
 
-function projectListeners(){
-const showView = document.querySelector('.edit-con'); 
-const title =document.querySelector('.current-view');
-const titleHolder = title.textContent.trim().toLowerCase();
-  showView.addEventListener('click', ()=>{
-    const projects = userProjectStorage.getStorage();
-    const tasks = userTasksStorage.getStorage();
-     title.contentEditable = "true"
-     title.focus();
-
-     title.classList.add("editing-project");
-
-     
-     title.addEventListener("blur", ()=>{
-       const newTitle = title.textContent.trim() || "Untitled";
-       const updatedTitle = newTitle.toLowerCase();
-      
-       
-       const project = projects.find(item => item.name === titleHolder);
-       const projectHolder = project.name;
-      if (project){
-        project.name = updatedTitle;
-      }
-
-      tasks.forEach(item => {
-        if (item.project === projectHolder) {
-          item.project = updatedTitle;
-        }
-      });
-
-      // Don't Touch
-      setView(updatedTitle)
-      setCurrTaskView(updatedTitle);
-      setProjectView(updatedTitle);
-      userProjectStorage.setStorage(projects);
-      setAndRefreshDisplay(tasks);
-      displayCurrentView();
-      displayProjects()
-      
-      title.contentEditable = "false"
-      title.classList.remove("editing-project");
 
 
-    });
-    title.addEventListener("keydown", (e) => {
-      if (e.key === "Enter") title.blur();
-    });
-        
-    })
-      
-  
-}
-
-// function projectListeners(){
+// function editProject(){
 //   const title =document.querySelector('.current-view')
 //   const projectDialog = document.getElementById('projectDialog');
 //    const projectEdit = document.querySelector(".project-edit");
