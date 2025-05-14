@@ -42,7 +42,7 @@ const currentTaskHeading = {
   function getRandomMessage(view) {
     const messages = taskMessages[view] || taskMessages.default;
     const randomMessage = messages[Math.floor(Math.random() * messages.length)];
-    console.log(randomMessage)
+    // console.log(randomMessage)
     return randomMessage;
   }
 

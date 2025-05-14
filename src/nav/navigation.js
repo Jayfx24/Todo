@@ -2,13 +2,12 @@
 import { allTask } from '../todos';
 import {testTodos} from '../data/testTodos'
 import { filterByView} from '../contentFilter';
-import { displayTodo,elements, components } from '../contentManagers/todoManager';
+import { displayTodo,elements, components, getAllUserTask } from '../contentManagers/todoManager';
 import { displayProjects,renderProjectTodo,deleteProject } from '../contentManagers/projectsManager';
 import { displayCurrentView } from '../mainDOM';
 import { icons } from '../assets/icons';
 import { userTasksStorage } from '../storage';
 
-let allUserTask = userTasksStorage.getStorage();
 
 export function initSideNav (){
 
@@ -20,7 +19,7 @@ export function initSideNav (){
 }
 
 export function displayTodoNav() {
-    allUserTask = userTasksStorage.getStorage();
+
     const buttons = [
       { id: "tasks", text: "Tasks" },
       { id: "today", text: "Today" },
@@ -56,6 +55,8 @@ export function displayTodoNav() {
       if (!button) return;
         
       let targetId = button.id;
+      let allUserTask = getAllUserTask();
+
       const filtered = filterByView(targetId, allUserTask);
       displayTodo(filtered);
       deleteProject();

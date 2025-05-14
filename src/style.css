@@ -1,9 +1,46 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap');
+
+
+.poppins-regular {
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.poppins-medium {
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+}
+
+.poppins-semibold {
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  font-style: normal;
+}
+
+.poppins-bold {
+  font-family: "Poppins", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.poppins-extrabold {
+  font-family: "Poppins", sans-serif;
+  font-weight: 800;
+  font-style: normal;
+}
+
+.poppins-black {
+  font-family: "Poppins", sans-serif;
+  font-weight: 900;
+  font-style: normal;
+}
+
 :root {
   /* Borders */
-  --border-width: 1px;
-  --border-style: solid;
-  --border-color: black;
-  --border: var(--border-width) var(--border-style) var(--border-color);
+ 
+  --border: 1px solid black;
 
   /* Border radius */
   --border-radius-sm: 4px;
@@ -13,7 +50,7 @@
   /* Dialog */
   --spacing : 1rem;
   --dialog-font-size: 1.25rem;
-  --dialog-btns-padding : 0.5rem 1rem;
+  --dialog-btns-padding : 0.7rem 2rem;
 
     /* Font */
     --font-size: 1rem;
@@ -49,8 +86,8 @@
      --pending: hsl(35, 85%, 55%);
      --overdue: hsl(0, 70%, 60%) ;
 
-     --primary-hover : hsl(220, 90%, 46%);
-     --primary : hsl(220, 90%, 56%);
+     --primary-hover : hsl(220, 90%, 35%);
+     --primary : hsl(244 100% 55%);
   }
   
 *{
@@ -75,6 +112,9 @@ header{
   /* border: 2px solid ; */
   height: 3rem;
   padding: 15px;
+  font-family: 'Poppins';
+  font-weight: 600;
+  font-size: 1rem;
 }
 
 main{
@@ -201,7 +241,7 @@ svg{
   display: flex;
   align-items: center;
   gap: 0.5rem;
-
+  font-weight: 600;
 
   
 }
@@ -211,8 +251,8 @@ svg{
 }
 .show-view svg{
   vertical-align: bottom;  
-  width: 20px;
-  height: 24px;
+  /* width: 20px;
+  height: 40px; */
   flex-shrink: 0;
   
 
@@ -231,16 +271,52 @@ svg{
   justify-content: space-between;
   align-items: end;
 }
-#addTodo, #addProject, #deleteProject{
-  border: var(--border);
+
+.btns{
+  display: flex;
+  gap: 0.6rem;
+  padding: 0 1rem;
+}
+#addTodo, #addProject, #deleteProject,.details{
+  /* border: var(--border); */
   padding: 0.5rem 1rem;
   border-radius: var(--border-radius);
+  font-weight: 600;
+}
+
+#addTodo{
+  /* display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .2rem; */
+  background-color: hsl(229 29.8% 20%);
+  color: white;
+}
+
+#addProject{
+  border: 1px solid hsl(229 29.8% 20%);
+  color: hsl(229 29.8% 20%);
 }
 #deleteProject{
   background-color: red;
+  border: inherit;
   color: white;
   font-weight: 700;
 }
+
+#addTodo:hover{
+  background-color:hsl(0, 0%, 90%);
+  color: hsl(229 29.8% 20%);
+}
+
+#addProject:hover{
+  background-color: hsl(229 29.8% 20%);
+  color: white;
+}
+/* #addTodo svg{
+  font-size: 1rem;
+  fill: grey;
+} */
 
 .todo-container{
   display: flex;
@@ -282,11 +358,29 @@ svg{
   padding: var(--padding-sm) var(--padding-lg);
 }
 
+.details{
+  background-color: var(--bg);
+  border: inherit;
+  font-weight: 400;
+  /* border-radius: var(--border-radius-lg); */
+  
+  
+}
+
+.details:hover {
+  background-color:  hsl(229 29.8% 20%);
+  color: white;
+  border: inherit;
+  
+}
+
+
 .check:hover{
- 
+  
   
 }
 .complete-svg{
+ 
   margin-right: 1rem;
 
 }
@@ -352,7 +446,7 @@ svg{
   border-top: none;
   padding: var(--padding-sm);
   border-radius: var(--border-radius-md);
-  
+  background-color: var(--bg);
 }
 
 .sub-con{
@@ -414,20 +508,32 @@ svg{
 /* dialogs */
 #todoDialog,#projectDialog{
  margin: auto;
- padding: 1.5rem 1rem;
- width: 400px;
+ /* padding: 1.5rem 1rem; */
+ width: clamp(280px, 45%, 450px);
+
  border: none;
- overflow: visible;
+ background-color: hsl(229 29.8% 20%);
+ overflow-y: auto;
  border-radius: var(--border-radius);
-
+ max-height: 90vh;
 
   
   
 }
 
-#todoDialog[open],#projectDialog[open]{
-  /* animation: appear 2s; */
+
+
+form{
+  display: flex;
+  flex-direction: column;
+  padding:2rem 1.7rem ;
+  gap: 1.2rem;
+  /* letter-spacing: 1px; */
+  line-height: 1.6;
+  /* background-color: hsl(229 29.8% 20%); */
+  color:white;
 }
+
 #todoForm{
   position: relative;
   
@@ -442,6 +548,8 @@ svg{
   right: 12px;
   cursor: pointer;
   margin-bottom: 15px;
+  z-index: 2;
+  fill: red;
 
   
 }
@@ -457,30 +565,66 @@ svg{
 }
 .form-group{
   /* border: var(--border); */
-  margin-bottom: var(--spacing);
+  /* margin-bottom: 4px; */
   font-size: var(--dialog-font-size);
 }
 
-.form-group > * {
+/* .form-group > * {
   display: block;
+} */
+
+form label{
+  margin-bottom: .2rem;
+ font-weight: 500;
+ text-transform: uppercase;
+ 
 }
 
 .form-group > *{
-  padding: var(--input-padding);
-  width: 100%;
+  
   font-size: var(--font-size);
+}
+
+input,select,textarea{
+  width: 100%;
+  padding: .3rem;
+  background-color: hsl(229 29.8% 20%);
+  border: none;
+  border-bottom: 1px solid grey;
+  color: white;
+  outline: none;
+
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(1); 
+  transform: scale(1.3); /* increase size */
+  cursor: pointer;
 }
 
 #todoFormBtn,#projectFormBtn{
   /* border: var(--border); */
   padding: var(--dialog-btns-padding);
   background-color: var(--primary);
-  border: var(--primary);
-  border-radius: var(--border-radius-lg);
+  border: 1px solid var(--primary);
+  border-radius: var(--border-radius);
   width: fit-content;
   min-width: 100px;
-  
+  font-size: .975rem;
+  font-weight: 600;
+  color: white;
+  margin-top: .5rem;
 }
+
+#todoFormBtn:hover , #projectFormBtn:hover{
+  background-color: white;
+  /* border: 1px solid white; */
+  color: var(--primary);
+  
+
+  transition: background-color 0.5s ease;
+}
+
 .update-form > button{
   background-color: lightgreen;
 }
@@ -497,4 +641,24 @@ svg{
   display: none;
 }
 
+/* 
+body{
+  background-color: hsl(229 29.8% 20%);
+  color: white;
+}
 
+li button{
+  color:white
+}
+
+li button svg{
+  fill: white;
+}
+.todo-container{
+  background-color: var(--bg);
+  color: black;
+}
+
+.todo-container svg{
+
+} */

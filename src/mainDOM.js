@@ -1,8 +1,8 @@
 
-import { getProjectCurrentView, getCurrentViewMsg, getCurrentView} from "./statusChecker";
+import { getProjectCurrentView, getCurrentViewMsg, getCurrentView, defaultViews} from "./statusChecker";
 import { userProjectStorage} from "./storage";
 import { icons } from "./assets/icons";
-import {editProject,deleteProject } from "./contentManagers/projectsManager";
+import {editProject } from "./contentManagers/projectsManager";
 
 const elements = {
   showCurrentView: document.querySelector(".show-view"),
@@ -60,14 +60,17 @@ export function createTodoForm(ele) {
 
   // Project Type (empty container)
   const projectTypeGroup = document.createElement("div");
-  projectTypeGroup.className = "form-group project-type";
-
+  const projectTypeLabel = document.createElement("label");
   const select = document.createElement("select");
-  select.name = 'project'
+  projectTypeGroup.classList.add("form-group");
+  projectTypeLabel.setAttribute('for','projectType');
+  projectTypeLabel.textContent = "Assign Project";
+  select.name = 'project';
+  select.id = 'projectType';
 
-  const updatedArr = currPView()
-  console.log(updatedArr)
-  console.log('updatedArr')
+  const updatedArr = currPView();
+  // console.log(updatedArr)
+ 
   updatedArr.forEach((item) => {
       const option = document.createElement("option");
       const name = item.name;
@@ -76,6 +79,7 @@ export function createTodoForm(ele) {
 
       select.appendChild(option);
   });
+    projectTypeGroup.appendChild(projectTypeLabel);
     projectTypeGroup.appendChild(select);
 
   // Priority
@@ -110,7 +114,7 @@ export function createTodoForm(ele) {
   // Submit Button
   const submitButton = document.createElement("button");
   submitButton.type = "submit";
-  submitButton.textContent = "Send";
+  submitButton.textContent = "Create Task";
   submitButton.id = 'todoFormBtn'
 
 
@@ -123,7 +127,7 @@ export function createTodoForm(ele) {
   // // Append all to form
   // form.appendChild(closeSvgWrapper);
   form.appendChild(projectGroup);
-  form.appendChild(projectTypeGroup);
+  // form.appendChild(projectTypeGroup);
   form.appendChild(descGroup);
   form.appendChild(dueDateGroup);
   form.appendChild(projectTypeGroup);
@@ -174,23 +178,21 @@ function currPView(){
 
   const view = getProjectCurrentView().toLowerCase();
   const updatedArr = [allProjects.find(item => item['name'] === view),...allProjects.filter(item => item['name'] != view)];
-  console.log(`here - ${view}`)
+  // console.log(`here - ${view}`)
 
-  console.log(updatedArr)
+  // console.log(updatedArr)
   return updatedArr;
 }
 
 export function displayCurrentView() {
   const currViewMsg = getCurrentViewMsg();
   const currentView = getCurrentView();
-  const views = ['tasks','today','week','upcoming','overdue','personal',null]
- 
-  console.log(currViewMsg)
+  
 
-  if(!views.includes(currentView)){
+  if(!defaultViews.includes(currentView)){
     elements.showCurrentView.innerHTML = `${icons.view}<span class="edit-con"> <span class="current-view">${currViewMsg}</span><span class="project-edit">${icons.edit}</span></span>`;
     editProject();
-    // deleteProject();
+    
   }
   else{
     elements.showCurrentView.innerHTML = `${icons.view}<span >${currViewMsg}</span>`;

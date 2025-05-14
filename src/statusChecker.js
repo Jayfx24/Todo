@@ -8,7 +8,7 @@ export const defaultViews = ['tasks','today','week','upcoming','overdue','person
 
 export function setView(view){
     currentView = view;
-    console.log(`current view - ${currentView}`)
+    // console.log(`current view - ${currentView}`)
 
 }
 
@@ -21,13 +21,13 @@ export function getCurrentView(){
 
 export function setProjectView(view){
     currentProjectView = view;
-    console.log(currentProjectView);
+    // console.log(currentProjectView);
     
     
 } 
 
 export function getProjectCurrentView(){
-    console.log(`current get view - ${currentProjectView}`)
+    // console.log(`current get view - ${currentProjectView}`)
     return currentProjectView;
 }
 

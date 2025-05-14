@@ -29,7 +29,7 @@ function createProjects(items) {
   projectUl.innerHTML = "";
 
   for (const pj of items) {
-    console.log(pj);
+    // console.log(pj);
     const li = document.createElement("li");
     const btn = document.createElement("button");
     const textWrapper = document.createElement("span");
@@ -114,25 +114,10 @@ export function editProject(){
     
   }
 
-// function projectBtns() {
-//   const projectUl = document.querySelector('.project-list');
-
-
-//   projectUl.addEventListener('click',(e) =>{
-//     const button = e.target.closest("button");
-//     if (!button) return; 
-    
-//       renderProjectTodo(button.name);
-      
-//     }
-    
-    
-//   )
-// }
 
 
 export function getProjectForm(){
-  console.log('here')
+  allProjects = userProjectStorage.getStorage() ;
 
   const pf = document.getElementById('projectForm');
   const pd = document.getElementById('projectDialog');
@@ -143,20 +128,24 @@ export function getProjectForm(){
 
     const formData = new FormData(pf);
 
-    const pName = formData.get('projectFormName');
-    if (pName){
+    const pName = formData.get('projectFormName').trim();
+    
+    if (!allProjects.some(project => project.name === pName.toLowerCase()) && pName){
       
       allProjects.push(newProject(pName));
       userProjectStorage.setStorage(allProjects)
-      // console.table(allProjects);
-      setAllView(pName);
-      renderProjectTodo(pName);
+    
     }
-    
-    
+    else{
+      alert(`${pName} already exists....Please try again :)`)
+    }
+    setAllView(pName);
+    renderProjectTodo(pName);
     pf.reset();
     pd.close();
     displayProjects();
+    
+    
     })
 
     
@@ -170,7 +159,7 @@ export function renderProjectTodo(name){
 
   setView(pName);
   displayTodo(projectTodos);
-  // deleteProject();
+  
 }
 
 export function deleteProject(){
@@ -210,8 +199,8 @@ function handleDelete(){
     allProjects = userProjectStorage.getStorage();
     const allTodos = userTasksStorage.getStorage();
     const index = allProjects.findIndex(project => project.name === currProject);
-    console.log(index)
-    console.log(allProjects[index])
+    // console.log(index)
+    // console.log(allProjects[index])
     if (index === -1) return alert("Project not found.");
 
     const updatedList = allTodos.filter(item => item.project !== allProjects[index].name);

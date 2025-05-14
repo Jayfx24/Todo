@@ -35,22 +35,25 @@ components.todoNav.classList.add("todo-nav");
 components.todoDivText.textContent = "Active";
 components.completedDivText.textContent = "Completed";
 
-let allUserTask = userTasksStorage.getStorage();
+export const getAllUserTask = () => userTasksStorage.getStorage();
+let allUserTask = getAllUserTask();
+
 let isUpdatingForm = false;
 
 export function displayTodo(items) {
   const currView = getCurrentView();
-  const completed = items.filter((item) => item.status);
+  const completed = items.filter((item) => item.status).sort((a,b) => new Date(b.completedAt) - new Date(a.completedAt));
   const uncompleted = items.filter((item) => !item.status);
+  // console.log(completed)
 
   components.todoDiv.innerHTML = "";
   components.completedDiv.innerHTML = "";
 
   if (uncompleted.length === 0) {
     const noTaskContainer = showNoTask();
-    // console.log(noTaskContainer)
+    
     components.todoDiv.appendChild(noTaskContainer);
-    // showNoTask();
+   
   } else {
     components.todoDiv.appendChild(components.todoDivText);
     createTodoDOM(uncompleted, components.todoDiv);
@@ -114,7 +117,7 @@ function createTodoDOM(items, parent) {
     const projectType = document.createElement("p");
 
     const checkboxInput = document.createElement("input");
-    const subTask = document.createElement("button");
+    const details = document.createElement("button");
     const editSpan = document.createElement("span");
     const overdue = document.createElement("p");
     const deleteSvgWrapper = document.createElement("span");
@@ -131,7 +134,7 @@ function createTodoDOM(items, parent) {
    
 
     subContent.classList.add("sub-con");
-    // subTask.classList.add('hide');
+    details.classList.add('details');
     checkboxDiv.classList.add("checkbox-wrapper");
     desc.classList.add("desc");
     createdAt.classList.add("created-at");
@@ -146,14 +149,14 @@ function createTodoDOM(items, parent) {
     title.className = "title";
     dueDate.className = "due-date";
     // IDs
-    subTask.id = "subDivBtn";
+    details.id = "subDivBtn";
     // TextContents
     title.textContent = todo["title"];
     desc.textContent = todo["desc"];
     dueDate.textContent = todo["dueDate"];
     createdAt.textContent = todo["createdAt"];
     projectType.textContent = todo["project"].toUpperCase();
-    subTask.textContent = "Details";
+    details.textContent = "Details";
 
     editSpan.innerHTML = icons.edit;
 
@@ -170,8 +173,10 @@ function createTodoDOM(items, parent) {
     deleteSvg.innerHTML = icons.delete;
     deleteHoverSvg.innerHTML = icons.deleteHover;
 
+
+
     // event listeners
-    subTask.addEventListener("click", () => {
+    details.addEventListener("click", () => {
       subDiv.classList.toggle("sub-div");
       subDiv.classList.toggle("hide");
     });
@@ -202,6 +207,7 @@ function createTodoDOM(items, parent) {
       // console.log(dueDate.textContent)
     }
 
+
     deleteSvgWrapper.appendChild(deleteSvg);
     deleteSvgWrapper.appendChild(deleteHoverSvg);
 
@@ -211,7 +217,7 @@ function createTodoDOM(items, parent) {
 
     todoMainDiv.appendChild(title);
     todoMainDiv.appendChild(dueDate);
-    todoMainDiv.appendChild(subTask);
+    todoMainDiv.appendChild(details);
 
     subContent.appendChild(createdAt);
     subContent.appendChild(projectType);
@@ -241,17 +247,19 @@ function handleStatusChange() {
 }
 
 function updateStatus(id) {
-  allUserTask = userTasksStorage.getStorage();
+  allUserTask = getAllUserTask();
   const taskToUpdate = allUserTask.find((item) => item.uuid === id);
 
   if (taskToUpdate) {
     taskToUpdate.status = !taskToUpdate.status;
+    taskToUpdate.completedAt = taskToUpdate.status ? new Date().toISOString(): null;
+    console.log(allUserTask)
     setAndRefreshDisplay(allUserTask);
   }
 }
 
 export function deleteTodoItem() {
-  allUserTask = userTasksStorage.getStorage();
+  allUserTask = getAllUserTask();
 
   const deleteIcons = document.querySelectorAll(".delete-wrapper");
   deleteIcons.forEach((item) => {
@@ -308,7 +316,7 @@ export function getAddForm() {
       }
     } else {
       const newItem = todoItem(title, desc, dueDate, priority, project);
-      allUserTask.push(newItem);
+      allUserTask.unshift(newItem);
     }
 
     setAndRefreshDisplay(allUserTask);
@@ -319,7 +327,7 @@ export function getAddForm() {
 }
 
 export function populateForm(id) {
-  allUserTask = userTasksStorage.getStorage();
+  allUserTask = getAllUserTask();
   if (id) {
     const todoData = allUserTask.find((item) => item["uuid"] === id);
     const todoForm = document.getElementById("todoForm");
@@ -382,7 +390,7 @@ export function populateForm(id) {
 
 export function setAndRefreshDisplay(arr) {
   userTasksStorage.setStorage(arr);
-  allUserTask = userTasksStorage.getStorage(); 
+  allUserTask = getAllUserTask(); 
   const view = getCurrentView();
   const list = filterByView(view, allUserTask);
   displayTodo(list);

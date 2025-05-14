@@ -1,5 +1,4 @@
 import "./style.css";
-import { displayProjects } from "./contentManagers/projectsManager";
 import { displayTodo,deleteTodoItem } from "./contentManagers/todoManager";
 import {  initSideNav } from "./nav/navigation";
 import { initBtns } from "./contentManagers/dialogManager";
@@ -33,7 +32,7 @@ function initTodo(items){
   
   filterByView('tasks',items)
  
-    // deleteProject();
+   
 
   
 

@@ -13,7 +13,7 @@ export function initBtns(){
     
     setupTodoDialog()
     setupProjectEditListener();
-
+    // addTodoBtn.innerHTML = `<span> Add todo</span> `
     addTodoBtn.addEventListener('click',()=>{
         setupTodoDialog();
         todoDialog.showModal();
