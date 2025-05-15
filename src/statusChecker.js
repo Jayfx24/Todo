@@ -1,4 +1,4 @@
-let currentView = null;
+let currentView = 'tasks';
 let currTaskMsg = "ALL TASKS";
 let currentProjectView = 'personal';
 let currentPeriodText;

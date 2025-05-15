@@ -190,12 +190,12 @@ export function displayCurrentView() {
   
 
   if(!defaultViews.includes(currentView)){
-    elements.showCurrentView.innerHTML = `${icons.view}<span class="edit-con"> <span class="current-view">${currViewMsg}</span><span class="project-edit">${icons.edit}</span></span>`;
+    elements.showCurrentView.innerHTML = `${icons.folder}<span class="edit-con"> <p class="current-view">${currViewMsg}</p><span class="project-edit">${icons.edit}</span></span>`;
     editProject();
     
   }
   else{
-    elements.showCurrentView.innerHTML = `${icons.view}<span >${currViewMsg}</span>`;
+    elements.showCurrentView.innerHTML = `${icons[currentView]||icons.folder}<p >${currViewMsg}</p>`;
   }
   elements.showCurrentView.className = "show-view";
 }

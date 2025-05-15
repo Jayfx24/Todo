@@ -112,9 +112,12 @@ function createTodoDOM(items, parent) {
     const checkboxDiv = document.createElement("div");
     const title = document.createElement("p");
     const desc = document.createElement("p");
-    const dueDate = document.createElement("p");
-    const createdAt = document.createElement("p");
-    const projectType = document.createElement("p");
+    const dueDate = document.createElement("div");
+    const createdAt = document.createElement("span");
+    const projectType = document.createElement("span");
+    const priority = document.createElement("span");
+    const priorityStatus = document.createElement("div");
+    const priorityText = document.createElement("p");
 
     const checkboxInput = document.createElement("input");
     const details = document.createElement("button");
@@ -139,6 +142,8 @@ function createTodoDOM(items, parent) {
     desc.classList.add("desc");
     createdAt.classList.add("created-at");
     projectType.classList.add("project-type");
+    priority.classList.add("priority");
+    priorityStatus.classList.add("priority-status");
     completeSvgWrapper.classList.add("complete-svg");
     checkboxInput.classList.add("checkbox-input");
     editSpan.classList.add("edit");
@@ -153,9 +158,10 @@ function createTodoDOM(items, parent) {
     // TextContents
     title.textContent = todo["title"];
     desc.textContent = todo["desc"];
-    dueDate.textContent = todo["dueDate"];
-    createdAt.textContent = todo["createdAt"];
-    projectType.textContent = todo["project"].toUpperCase();
+    dueDate.innerHTML = `${icons.due}<p>${todo["dueDate"]}</p>`;
+    createdAt.innerHTML = `<p>Created on: ${todo["createdAt"]}</p>`;
+    projectType.innerHTML = `${icons.folder}<p>${todo["project"].toUpperCase()}</p>`;
+    priorityText.textContent = `${todo.priority.toLowerCase()}`;
     details.textContent = "Details";
 
     editSpan.innerHTML = icons.edit;
@@ -206,8 +212,35 @@ function createTodoDOM(items, parent) {
       overdue.classList.add("hide");
       // console.log(dueDate.textContent)
     }
+    if (todo.status){
+      todoMainDiv.style.borderLeft = '10px solid gray'
+        priorityStatus.style.backgroundColor = 'gray';
+        
+    }
+    else{
 
+      switch (todo.priority.toLowerCase()){
+        case 'low':
+          todoMainDiv.style.borderLeft = '10px solid green'
+          priorityStatus.style.backgroundColor = 'green';
+          break;
+          case 'medium':
+            todoMainDiv.style.borderLeft = '10px solid orange'
+          priorityStatus.style.backgroundColor = 'orange';
+  
+            break;
+            case 'high':
+              todoMainDiv.style.borderLeft = '10px solid red'
+          priorityStatus.style.backgroundColor = 'red';
+  
+              break;  
+  
+      }
+    }
+    
 
+    priority.appendChild(priorityStatus)
+    priority.appendChild(priorityText)
     deleteSvgWrapper.appendChild(deleteSvg);
     deleteSvgWrapper.appendChild(deleteHoverSvg);
 
@@ -218,10 +251,11 @@ function createTodoDOM(items, parent) {
     todoMainDiv.appendChild(title);
     todoMainDiv.appendChild(dueDate);
     todoMainDiv.appendChild(details);
-
-    subContent.appendChild(createdAt);
+    
     subContent.appendChild(projectType);
+    subContent.appendChild(createdAt);
     subContent.appendChild(overdue);
+    subContent.appendChild(priority);
     subContent.appendChild(options);
     subDiv.appendChild(desc);
     subDiv.appendChild(subContent);

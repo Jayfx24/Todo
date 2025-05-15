@@ -6,7 +6,7 @@ import { filterByView } from "./contentFilter";
 import { testTodos } from "./data/testTodos";
 import { testProjectsData } from "./data/testProjects";
 import { userTasksStorage,userProjectStorage } from "./storage";
-
+import { setView } from "./statusChecker";
 
 
 
@@ -29,8 +29,9 @@ function app() {
 function initTodo(items){
   displayTodo(items)
   deleteTodoItem();
-  
+  // setView('tasks');
   filterByView('tasks',items)
+
  
    
 

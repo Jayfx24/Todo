@@ -35,7 +35,7 @@ function createProjects(items) {
     const textWrapper = document.createElement("span");
     const svgWrapper = document.createElement("span");
 
-    svgWrapper.innerHTML = `${icons.card}`
+    svgWrapper.innerHTML = `${icons.folder}`
     textWrapper.textContent = `${pj["name"].toUpperCase()}`;
     btn.name = `${pj["name"].toLowerCase()}`;
     btn.id = pj['name'].toLowerCase();
@@ -144,6 +144,8 @@ export function getProjectForm(){
     pf.reset();
     pd.close();
     displayProjects();
+   deleteProject();
+
     
     
     })
