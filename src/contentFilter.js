@@ -3,32 +3,58 @@ import { setView,setViewText, setCurrTaskView, setProjectView } from './statusCh
 
 // const  currProjectView = getProjectCurrentView();
 const taskMessages = {
-    today: [
-      'No tasks for today! Take it easy or plan something ahead.',
-      'Looks like today is task-free! Maybe take a break?',
-      'No tasks to tackle today, enjoy the moment.',
-    ],
-    week: [
-      'You’re all set for the week—no tasks yet!',
-      'No tasks this week, maybe start planning ahead?',
-      'Take the week off—there’s nothing on your plate!',
-    ],
-    upcoming: [
-      'No tasks planned, time to add something to look forward to!',
-      'The future is wide open, maybe add some tasks to stay on track?',
-      'Looks like there’s nothing planned ahead. Let’s fill that up!',
-    ],
-    overdue: [
-      'You missed some tasks. No worries, you’ve got this!',
-      'Overdue tasks—time to catch up!',
-      'It’s never too late! Let’s finish those overdue tasks!',
-    ],
-    default: [
-      'No tasks available. Click the add button and start tracking your goals.',
-      'Looks like you don’t have any tasks yet—add your first one!',
-      'Ready to get started? Click on add to start adding tasks!',
-    ],
-  };
+  today: [
+    "✅ You're all caught up for today — well done!",
+    "🛋️ No tasks for today. Take a breather or get ahead!",
+    "🎯 Today’s list is clear. Nice job staying on track!",
+    "☀️ Enjoy the moment — no tasks today!",
+    "🧘 Relax! Nothing’s scheduled for today.",
+    "😌 Today’s looking easy — no tasks due.",
+    "💤 Take it slow, you’ve earned it — no tasks today!",
+    "📅 No tasks today. Maybe review or prep for tomorrow?",
+  ],
+  week: [
+    "🌈 You’ve got nothing scheduled this week — smooth sailing!",
+    "📝 All clear for the week! Maybe plan something productive?",
+    "⏳ No weekly tasks yet — a great chance to stay ahead.",
+    "🌤️ Free week ahead — enjoy the extra space!",
+    "💪 Your weekly task list is clear — great job!",
+    "😎 No pressure this week. Keep up the momentum!",
+    "🛫 No tasks on deck this week — make the most of it!",
+    "📆 Clear skies this week — time to recharge or plan ahead.",
+  ],
+  upcoming: [
+    "🔮 Nothing planned yet — the future’s wide open!",
+    "🧭 No upcoming tasks. Perfect time to plan ahead!",
+    "📂 Looking good! Add tasks when you're ready.",
+    "🌱 No future tasks — set something exciting!",
+    "📌 Add a goal to keep your momentum going.",
+    "🗓️ Your schedule ahead is clear. Want to plan something?",
+    "⚡ No tasks coming up — good chance to get ahead.",
+    "🚀 Free path ahead — maybe create a new milestone?",
+  ],
+  overdue: [
+    "👏 Great job! No overdue tasks — you’re staying on top!",
+    "🟢 Nothing overdue. You're keeping things in check!",
+    "🌟 Awesome work — all tasks are up to date!",
+    "🥳 No overdue tasks. You're crushing it!",
+    "📈 Everything’s on track — no past due tasks!",
+    "✨ Clean slate — no overdue items!",
+    "🙌 Staying consistent — love to see it!",
+    "💯 You’ve got no overdue tasks — amazing!",
+  ],
+  default: [
+    "➕ No tasks yet. Click the add button to get started!",
+    "📭 Looks like your task list is empty — let’s change that!",
+    "🆕 Ready to begin? Add your first task and start making progress!",
+    "🚧 Nothing here yet. Time to build your list!",
+    "🎯 No goals tracked yet. Let’s fix that!",
+    "📋 Your board is empty. Add a task to kick things off!",
+    "✨ Clean start — add your first task!",
+    "👣 First step time — click add and get going!",
+  ],
+};
+
 
 const currentTaskHeading = {
   today: "Today",
@@ -74,7 +100,7 @@ export function overdueTasks(items){
 }
 
 export function allTodoTasks(items){
-  //  filterByView('tasks',items)
+ 
     return items;
 }
 
@@ -116,14 +142,15 @@ export function filterByView(targetId, todos){
 
         case 'overdue':
             setView('overdue')
-            message = getRandomMessage(targetId)
-            setViewText(message);;
+            message = getRandomMessage(targetId);
+            setViewText(message);
             setCurrTaskView(currentTaskHeading[targetId])
             return overdueTasks(todos);
             
         case 'tasks':
             setView('tasks');
             message = getRandomMessage('default')
+            console.log(message)
             setViewText(message);
             setCurrTaskView(currentTaskHeading[targetId])
             return allTodoTasks(todos);
@@ -134,4 +161,10 @@ export function filterByView(targetId, todos){
             
 
     }
+}
+
+export function toggleMode(){
+  const body = document.body;
+
+  body.classList.toggle('dark-mode');
 }

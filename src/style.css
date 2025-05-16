@@ -1,17 +1,21 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap');
 
 
-.poppins-regular {
-  font-family: "Poppins", sans-serif;
-  font-weight: 400;
+@font-face {
+  font-family: 'Inter';
+  src: url(assets/fonts/Inter,Roboto/Inter/Inter-VariableFont_opsz,wght.ttf) format('truetype');
+  font-weight: 100 900;
   font-style: normal;
 }
 
-.poppins-medium {
-  font-family: "Poppins", sans-serif;
-  font-weight: 500;
+@font-face {
+  font-family: 'Roberto';
+  src: url(assets/fonts/Inter,Roboto/Roboto/Roboto-VariableFont_wdth\,wght.ttf) format('truetype');
+  font-weight: 100 900;
   font-style: normal;
 }
+
+
 
 .poppins-semibold {
   font-family: "Poppins", sans-serif;
@@ -25,17 +29,6 @@
   font-style: normal;
 }
 
-.poppins-extrabold {
-  font-family: "Poppins", sans-serif;
-  font-weight: 800;
-  font-style: normal;
-}
-
-.poppins-black {
-  font-family: "Poppins", sans-serif;
-  font-weight: 900;
-  font-style: normal;
-}
 
 :root {
   /* Borders */
@@ -52,19 +45,7 @@
   --dialog-font-size: 1.25rem;
   --dialog-btns-padding : 0.7rem 2rem;
 
-    /* Font */
-    --font-size: 1rem;
-    --font-size-md: 1.25rem; 
-    --font-size-large: 1.5rem; 
-    
-    --heading-font-size: 1.25rem; 
-    --body-font-size: 1rem; 
-    --input-font-size: 1rem; 
-    --button-font-size: 1rem; 
-
-    --font-w-x : 400;
-    --font-w-xx : 600;
-    --font-w-xxx : 800;
+   
     /* input  */
   --input-padding : 0.25rem;
 
@@ -82,9 +63,6 @@
 
      --border : 1px solid hsl(220, 15%, 90%);
 
-     --completed: hsl(140, 60%, 45%);
-     --pending: hsl(35, 85%, 55%);
-     --overdue: hsl(0, 70%, 60%) ;
 
      --primary-hover : hsl(220, 90%, 35%);
      --primary : hsl(244 100% 55%);
@@ -102,8 +80,11 @@ body{
   width: 100%;
   min-height: 100vh;
   background-color: var(--bg);
+   font-family: 'Inter' sans-serif;
+
 
 }
+
 
 header{
   display: flex;
@@ -113,15 +94,14 @@ header{
   height: 3rem;
   padding: 15px;
   font-family: 'Poppins';
-  font-weight: 600;
+  font-weight: 700;
   font-size: 1rem;
 }
 
 main{
   width: 100%;
   height: 100vh;
-  /* border: 1px solid; */
-  /* display: flex; */
+
   display: grid;
   grid-template-columns: minmax(200px,250px) 1fr;
   grid-template-rows: auto 1fr;
@@ -140,9 +120,10 @@ main{
 
 
 button{
-  /* border: 0;
-  background-color: inherit; */
+  
   cursor: pointer;
+  font-weight: 800;
+  
 }
 
 ul{
@@ -153,10 +134,11 @@ ul{
   grid-row: 2;
   width: 100%;
   height: auto;
-  /* border: 1px solid; */
+  /* border: var(--border); */
+  border-top: none;
   /* color: white; */
-  padding: var(--padding-sm) 0 ;
-  /* background-color: navy; */
+  padding: var(--padding) 0 ;
+
   display: flex;
   flex-direction: column;
   /* align-items: center; */
@@ -168,14 +150,11 @@ li button{
   font-size: var(--font-size);
 
 }
-#sidebar > * {
-  /* border: 1px solid black; */
-  /* text-align: center; */
-}
+
 
 .sidebar_button,.project-nav-btn{
   background-color: transparent;
-  padding: var(--padding) var(--padding-lg);
+  padding: var(--padding)  var(--padding)  var(--padding) 2.5rem;
   border: 1px solid var(--border);
   /* border-radius: 15px; */
   font-weight: 800;
@@ -185,21 +164,23 @@ li button{
 
 }
 
-.sidebar_button,.project-nav-btn{
-  /* display: flex;
 
-  gap: .2rem; */
-}
 .sidebar_button:hover{
   background-color: var(--primary-hover);
+  color: white;
+  fill: white;
+
 }
 
 .sidebar_button:focus{
   background-color: var(--primary-hover);
-  
+  color: white;
+  fill: white;
 }
 .project-nav-btn:hover{
   background-color: green;
+  color: white;
+  fill: white;
 }
 
 .todo-nav{
@@ -229,7 +210,7 @@ svg{
 
 .main-content{
   flex: 1;
-  /* border: 1px solid; */
+ 
 
 }
 
@@ -239,7 +220,7 @@ svg{
 
 .show-view {
   display: flex;
-  align-items: center;  /* vertically centers children */
+  align-items: center; 
   gap: 0.5rem;
   font-weight: 600;
 }
@@ -247,7 +228,7 @@ svg{
 .show-view svg {
   width: 24px;
   height: 24px;
-  flex-shrink: 0;       /* prevents shrinking */
+  flex-shrink: 0;       
 }
 
 .edit-con {
@@ -273,14 +254,8 @@ svg{
   text-align: left;
   
 }
-.editing-project:focus .edit-con svg{
-  display: none;
-}
 
-.show-view span{
-  /* font-size:20px; */
-  /* padding-bottom: 8px; */
-}
+
 .add-todo{
   grid-column: 2 / end;
   /* border: var(--border); */
@@ -290,19 +265,24 @@ svg{
   display: flex;
   justify-content: space-between;
   align-items: end;
+  /* gap: 1rem; */
 }
 
 .btns{
   display: flex;
   gap: 0.6rem;
   padding: 0 1rem;
+  align-items: center;
 }
 #addTodo, #addProject, #deleteProject,.details{
   /* border: var(--border); */
   padding: 0.5rem 1rem;
   border-radius: var(--border-radius);
   font-weight: 600;
+  /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4); */
+  
 }
+
 
 #addTodo{
   /* display: flex;
@@ -327,11 +307,15 @@ svg{
 #addTodo:hover{
   background-color:hsl(0, 0%, 90%);
   color: hsl(229 29.8% 20%);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+  
 }
 
 #addProject:hover{
   background-color: hsl(229 29.8% 20%);
   color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+
 }
 /* #addTodo svg{
   font-size: 1rem;
@@ -346,26 +330,53 @@ svg{
   display: flex;
   flex-direction: column;
   height: 100%;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  gap: .5rem;
+  /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border: var(--border); */
   border-radius: var(--border-radius);
+  margin-top: 1rem ;
+  font-family: 'Roberto';
+  max-height: 87vh;
+  margin-bottom: 2rem;
+  overflow: auto;
+
 
 }
 
 .todo-div, .completed-div{
-  padding: var(--padding-sm) ;
+  /* padding: var(--padding-sm) ; */
   border-radius: 15px;
+  /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4); */
+  padding: 0 var(--padding);
+
+
 
 }
 .todo-div{
 
   height: 100%;
-  flex: 1;    
+  flex: 1;  
+  transition: transform 0.5s ease, background-color 0.5s ease, color 0.5s ease;
+
+}
+
+.todo-item {
+  background-color: #f5f5f5;
+  color: #333;
+}
+
+.todo-item.completed {
+  transform: translateX(100%);
+  background-color: #e6f7e6;
+  color: #2e7d32;
 }
 .todo-wrap{
   display: flex;
   flex-direction: column;
   margin-bottom: 10px;
-  /* border: 2px solid; */
+   font-weight: 400;
+
+  
 }
 
 .completed-text,.todo-text{
@@ -383,8 +394,9 @@ svg{
   padding: var(--padding-sm) var(--padding-lg);
   /* border-left: 10px solid red; */
   border-bottom: 1px solid inherit;
-}
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 
+}
 
 .due-date{
 
@@ -395,13 +407,15 @@ svg{
   /* border: inherit; */
   font-weight: 400;
   /* border-radius: var(--border-radius-lg); */
-  
+  transition: transform 0.2s ease-in-out;
+
   
 }
 
 .details:hover {
   background-color:  hsl(229 29.8% 20%);
   color: white;
+  transform: scale(1.1);
   
 }
 
@@ -444,12 +458,16 @@ svg{
   display: none;
 }
 
+
+
 .completed-div{
   flex: 1;
   width: 100%;
   height: 200px;
-  border: var(--border);
   color: grey;
+
+  /* border: var(--border); */
+  
 }
 
 .completed-div button{
@@ -483,18 +501,14 @@ svg{
   gap: .2rem;
   flex-direction: column;
   justify-content: center;
-  /* border: 1px solid; */
-  /* width: fit-content; */
-  /* height: 2rem; */
+ 
 }
 .checkbox-wrapper label {
   font-size: .8rem;
   /* margin-top: -.1rem; */
 
 }
-.checkbox-wrapper input{
-  
-}
+
 .sub-div{
   display: flex;
   border: var(--border);
@@ -503,9 +517,10 @@ svg{
   border-radius: var(--border-radius-md);
   background-color: var(--bg);
   padding: var(--padding-sm) var(--padding-lg);
-  margin-bottom: 2rem;
+  margin-bottom: .5rem;
   border-radius: 0 0 var(--border-radius-lg)  var(--border-radius-lg);
-
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+ 
 
 }
 
@@ -539,13 +554,8 @@ svg{
 .todo-options{
   display: flex;
   justify-content: right;
-  /* padding-right: 2rem; */
-  /* align-items: center; */
-  /* justify-content: right; */
-  /* width: 100%; */
   gap: .25rem;
-  /* flex: 1; */
-  /* border: 1px solid; */
+ 
 }
 
 
@@ -561,7 +571,7 @@ svg{
 
 .desc::before{
   content: "Description: ";
-  font-weight: 600;
+  font-weight: 700;
   display: inline-block;
   height: 100%;
   white-space: nowrap;
@@ -570,17 +580,12 @@ svg{
 
 
 
-/* .created-at::before{
-  content: "Created On: ";
+.no-tasks{
+  text-align: center;
+  font-size: 2rem;
   font-weight: 600;
+  margin-top: 3rem;
 }
-
-.project-type::before{
-  content: "PROJECT TYPE: ";
-  font-weight: 100;
-  font-style: italic;
-  font-size: 1rem;
-} */
 
 /* dialogs */
 #todoDialog,#projectDialog{
@@ -605,19 +610,17 @@ form{
   flex-direction: column;
   padding:2rem 1.7rem ;
   gap: 1.2rem;
-  /* letter-spacing: 1px; */
+  letter-spacing: 1px;
   line-height: 1.6;
   /* background-color: hsl(229 29.8% 20%); */
   color:white;
+  /* font-weight: 900; */
 }
 
 #todoForm{
   position: relative;
   
 }
-
-
-
 
 .close-svg{
   position: absolute;
@@ -643,7 +646,7 @@ form{
 .form-group{
   /* border: var(--border); */
   /* margin-bottom: 4px; */
-  font-size: var(--dialog-font-size);
+  font-size: 1rem;
 }
 
 /* .form-group > * {
@@ -685,7 +688,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   background-color: var(--primary);
   border: 1px solid var(--primary);
   border-radius: var(--border-radius);
-  width: fit-content;
+  width: 100%;
   min-width: 100px;
   font-size: .975rem;
   font-weight: 600;
@@ -718,24 +721,47 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   display: none;
 }
 
-/* 
-body{
-  background-color: hsl(229 29.8% 20%);
+.dark-mode {
+  background-color: black;
   color: white;
+
+  button:not(.details){
+    color:white
+  }
+  svg{
+    fill: white;
+  }
+  .sub-div{
+    background-color: transparent;
+    border-color: hsl(220, 15%, 30%); ;
+  }
+  .todo-main{
+    border-color:hsl(220, 15%, 40%);
+    box-shadow: 0 4px 8px rgba(255, 255, 255, 0.3);
+
+  }
+  .completed-div{
+    color:white
+  }
+  button:hover{
+    box-shadow: 0 4px 8px rgba(255, 255, 255, 0.3);
+    
+  }
+  .todo-main svg:hover{
+    fill: green;
+  }
 }
 
-li button{
-  color:white
-}
 
-li button svg{
-  fill: white;
-}
-.todo-container{
-  background-color: var(--bg);
-  color: black;
-}
+.toggle-icons{
+  cursor: pointer;
 
-.todo-container svg{
+}
+button:not(form button) {
+  transition: transform 0.2s ease-in-out;
+}
+button:hover:not(form button){
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+  transform: scale(1.1);
 
-} */
+}

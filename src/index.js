@@ -6,7 +6,7 @@ import { filterByView } from "./contentFilter";
 import { testTodos } from "./data/testTodos";
 import { testProjectsData } from "./data/testProjects";
 import { userTasksStorage,userProjectStorage } from "./storage";
-import { setView } from "./statusChecker";
+import { toggleIcon,toggleMode } from "./mainDOM";
 
 
 
@@ -16,21 +16,25 @@ const projectData = userProjectStorage.getStorage()
 const allTask = [];
 const allProjects = [];
 
+
 function app() {
  
   checkStorage();
   initSideNav();
   initBtns();
   initTodo(allTask)
+  toggleIcon();
+  toggleMode();
+
   
 
 }
 
 function initTodo(items){
   displayTodo(items)
-  deleteTodoItem();
-  // setView('tasks');
   filterByView('tasks',items)
+  deleteTodoItem();
+  
 
  
    

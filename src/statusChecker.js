@@ -36,7 +36,7 @@ export function setViewText(text){
     currentPeriodText = text;
 }
 
-export function getCurrentPeriod(){
+export function getViewText(){
     return currentPeriodText;
 }
 

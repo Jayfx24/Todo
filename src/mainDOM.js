@@ -201,35 +201,26 @@ export function displayCurrentView() {
 }
 
 
+let showingMoon = true;
 
-// function editProject(){
-//   const title =document.querySelector('.current-view')
-//   const projectDialog = document.getElementById('projectDialog');
-//    const projectEdit = document.querySelector(".project-edit");
-//     projectEdit.addEventListener('click', ()=>{
-//        const input = document.createElement('input');
-//        const titleText  = title.textContent;
-//        input.value = titleText;
-//        input.className = 'project-input'
-  
-//        title.replaceWith(input)
-//        input.focus();
-  
-  
-//       input.addEventListener("blur", ()=>{
-//         const newTitle = input.value.trim() || "Untitled";
-//         const newSpan = document.createElement("span");
-//         newSpan.textContent = newTitle;
-//         newSpan.className = "current-view";
-//         input.replaceWith(newSpan);
-  
-//         // displayCurrentView();
-//       });
-//       input.addEventListener("keydown", (e) => {
-//         if (e.key === "Enter") input.blur();
-//       });
-          
-//       })
-        
-    
-//   }
+export function toggleIcon(){
+  const svg = document.querySelector('.toggle-icons');
+  const svgMoon = icons.moon;
+  const svgSun = icons.sun;
+  svg.innerHTML = showingMoon ? svgMoon : svgSun;
+
+  showingMoon = !showingMoon
+
+
+}
+export function toggleMode(){
+  const svg = document.querySelector('.toggle-icons');
+  const body = document.body;
+
+  svg.addEventListener('click',()=>{
+    toggleIcon();
+    body.classList.toggle('dark-mode');
+    console.log("here")
+
+  } )
+}

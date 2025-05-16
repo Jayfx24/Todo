@@ -1,10 +1,6 @@
 import { filterByView} from "../contentFilter";
 import { todoItem } from "../todos";
-import {
-  getCurrentView,
-  getCurrentPeriod,
-  getCurrentViewMsg,
-} from "../statusChecker";
+import {getCurrentView ,getViewText} from "../statusChecker";
 import { getToday, dueDays } from "../dateUtility";
 import { icons } from "../assets/icons";
 import { userTasksStorage } from "../storage";
@@ -44,13 +40,13 @@ export function displayTodo(items) {
   const currView = getCurrentView();
   const completed = items.filter((item) => item.status).sort((a,b) => new Date(b.completedAt) - new Date(a.completedAt));
   const uncompleted = items.filter((item) => !item.status);
-  // console.log(completed)
+  
 
   components.todoDiv.innerHTML = "";
   components.completedDiv.innerHTML = "";
 
   if (uncompleted.length === 0) {
-    const noTaskContainer = showNoTask();
+    const noTaskContainer = displayNoTasksMessage();
     
     components.todoDiv.appendChild(noTaskContainer);
    
@@ -91,13 +87,14 @@ export function displayTodo(items) {
   deleteTodoItem();
 }
 
-function showNoTask() {
+function displayNoTasksMessage() {
   const container = document.createElement("div");
   const p = document.createElement("p");
+  p.className ='no-tasks';
 
-  const view = getCurrentPeriod();
+  const viewText = getViewText();
 
-  p.textContent = view || "default";
+  p.textContent = viewText || "Welcome";
   container.appendChild(p);
   return container;
 }
@@ -185,6 +182,9 @@ function createTodoDOM(items, parent) {
     details.addEventListener("click", () => {
       subDiv.classList.toggle("sub-div");
       subDiv.classList.toggle("hide");
+      // todoMainDiv.style.borderBottom = 'none'
+      // todoMainDiv.style.borderRadius = '0'
+
     });
 
     editSpan.addEventListener("click", (e) => {
@@ -221,17 +221,18 @@ function createTodoDOM(items, parent) {
 
       switch (todo.priority.toLowerCase()){
         case 'low':
-          todoMainDiv.style.borderLeft = '10px solid green'
-          priorityStatus.style.backgroundColor = 'green';
+          todoMainDiv.style.borderLeft = '10px solid hsl(140, 60%, 45%)'
+
+          priorityStatus.style.backgroundColor = 'hsl(140, 60%, 45%)';
           break;
           case 'medium':
-            todoMainDiv.style.borderLeft = '10px solid orange'
-          priorityStatus.style.backgroundColor = 'orange';
+            todoMainDiv.style.borderLeft = '10px solid hsl(35, 85%, 55%)'
+          priorityStatus.style.backgroundColor = 'hsl(35, 85%, 55%)';
   
             break;
             case 'high':
-              todoMainDiv.style.borderLeft = '10px solid red'
-          priorityStatus.style.backgroundColor = 'red';
+              todoMainDiv.style.borderLeft = '10px solid hsl(0, 70%, 60%)';
+          priorityStatus.style.backgroundColor = 'hsl(0, 70%, 60%)';
   
               break;  
   
@@ -378,49 +379,6 @@ export function populateForm(id) {
   }
 }
 
-// export function displayTodoNav() {
-//   const buttons = [
-//     { id: "tasks", text: "Tasks" },
-//     { id: "today", text: "Today" },
-//     { id: "week", text: "This Week" },
-//     // { id: "allUserTask", text: "All Tasks" },
-//     { id: "upcoming", text: "Upcoming" },
-//     { id: "overdue", text: "Overdue" },
-//   ];
-
-//   buttons.forEach((button) => {
-//     const li = document.createElement("li");
-//     const svgWrapper = document.createElement("span");
-//     const textWrapper = document.createElement("span");
-//     const btn = document.createElement("button");
-//     li.classList.add("sidebar_item");
-
-//     svgWrapper.classList.add("btn-wrapper");
-//     btn.classList.add("sidebar_button");
-//     btn.id = button.id;
-//     svgWrapper.innerHTML = `${icons[button.id]}`;
-//     textWrapper.innerHTML = `${button.text.toUpperCase()}`;
-
-//     btn.appendChild(svgWrapper);
-//     btn.appendChild(textWrapper);
-//     li.appendChild(btn);
-//     components.sidebarNav.appendChild(li);
-
-//     components.todoNav.appendChild(components.sidebarNav);
-
-//     elements.sidebar.appendChild(components.todoNav);
-//   });
-//   components.sidebarNav.addEventListener("click", (e) => {
-//     const button = e.target.closest("button");
-//     if (!button) return;
-
-//     let targetId = button.id;
-//     const filtered = filterByView(targetId, allUserTask);
-//     displayTodo(filtered);
-//   });
-// }
-
-
 
 export function setAndRefreshDisplay(arr) {
   userTasksStorage.setStorage(arr);
@@ -429,4 +387,5 @@ export function setAndRefreshDisplay(arr) {
   const list = filterByView(view, allUserTask);
   displayTodo(list);
 }
+
 
