@@ -1,6 +1,6 @@
-import { filterByView} from "../contentFilter";
+import { filterByView } from "../contentFilter";
 import { todoItem } from "../todos";
-import {getCurrentView ,getViewText} from "../statusChecker";
+import { getCurrentView, getViewText } from "../statusChecker";
 import { getToday, dueDays } from "../dateUtility";
 import { icons } from "../assets/icons";
 import { userTasksStorage } from "../storage";
@@ -10,7 +10,7 @@ export const elements = {
   todoDialog: document.getElementById("todoDialog"),
   todoContainer: document.querySelector(".todo-container"),
   sidebar: document.querySelector("#sidebar"),
-  delProjectBtn : document.getElementById('deleteProject'),
+  delProjectBtn: document.getElementById("deleteProject"),
 };
 
 export const components = {
@@ -38,18 +38,18 @@ let isUpdatingForm = false;
 
 export function displayTodo(items) {
   const currView = getCurrentView();
-  const completed = items.filter((item) => item.status).sort((a,b) => new Date(b.completedAt) - new Date(a.completedAt));
+  const completed = items
+    .filter((item) => item.status)
+    .sort((a, b) => new Date(b.completedAt) - new Date(a.completedAt));
   const uncompleted = items.filter((item) => !item.status);
-  
 
   components.todoDiv.innerHTML = "";
   components.completedDiv.innerHTML = "";
 
   if (uncompleted.length === 0) {
     const noTaskContainer = displayNoTasksMessage();
-    
+
     components.todoDiv.appendChild(noTaskContainer);
-   
   } else {
     components.todoDiv.appendChild(components.todoDivText);
     createTodoDOM(uncompleted, components.todoDiv);
@@ -90,7 +90,7 @@ export function displayTodo(items) {
 function displayNoTasksMessage() {
   const container = document.createElement("div");
   const p = document.createElement("p");
-  p.className ='no-tasks';
+  p.className = "no-tasks";
 
   const viewText = getViewText();
 
@@ -130,11 +130,10 @@ function createTodoDOM(items, parent) {
     todoWrapper.classList.add("todo-wrap");
     todoMainDiv.classList.add("todo-main");
     options.classList.add("todo-options");
-    subDiv.className = "hide";
-   
+    subDiv.classList.add('sub-div','hide');
 
     subContent.classList.add("sub-con");
-    details.classList.add('details');
+    details.classList.add("details");
     checkboxDiv.classList.add("checkbox-wrapper");
     desc.classList.add("desc");
     createdAt.classList.add("created-at");
@@ -157,7 +156,9 @@ function createTodoDOM(items, parent) {
     desc.textContent = todo["desc"];
     dueDate.innerHTML = `${icons.due}<p>${todo["dueDate"]}</p>`;
     createdAt.innerHTML = `<p>Created on: ${todo["createdAt"]}</p>`;
-    projectType.innerHTML = `${icons.folder}<p>${todo["project"].toUpperCase()}</p>`;
+    projectType.innerHTML = `${icons.folder}<p>${todo[
+      "project"
+    ].toUpperCase()}</p>`;
     priorityText.textContent = `${todo.priority.toLowerCase()}`;
     details.textContent = "Details";
 
@@ -176,15 +177,19 @@ function createTodoDOM(items, parent) {
     deleteSvg.innerHTML = icons.delete;
     deleteHoverSvg.innerHTML = icons.deleteHover;
 
-
-
     // event listeners
     details.addEventListener("click", () => {
-      subDiv.classList.toggle("sub-div");
+      
+      // subDiv.classList.toggle("sub-div");
       subDiv.classList.toggle("hide");
-      // todoMainDiv.style.borderBottom = 'none'
-      // todoMainDiv.style.borderRadius = '0'
+    });
 
+    document.addEventListener("click", (e) => {
+      if (!details.contains(e.target)) {
+        subDiv.classList.add("hide");
+      // subDiv.classList.toggle("sub-div");
+
+      }
     });
 
     editSpan.addEventListener("click", (e) => {
@@ -206,42 +211,35 @@ function createTodoDOM(items, parent) {
       overdue.textContent = `Overdue: ${dueDays(todo.dueDate)}`;
       overdue.classList.add("overdueTasks");
       // console.log(dueDate.textContent)
-    } 
-    
-    else {
+    } else {
       overdue.classList.add("hide");
       // console.log(dueDate.textContent)
     }
-    if (todo.status){
-      todoMainDiv.style.borderLeft = '10px solid gray'
-        priorityStatus.style.backgroundColor = 'gray';
-        
-    }
-    else{
+    if (todo.status) {
+      todoMainDiv.style.borderLeft = "10px solid gray";
+      priorityStatus.style.backgroundColor = "gray";
+    } else {
+      switch (todo.priority.toLowerCase()) {
+        case "low":
+          todoMainDiv.style.borderLeft = "10px solid hsl(140, 60%, 45%)";
 
-      switch (todo.priority.toLowerCase()){
-        case 'low':
-          todoMainDiv.style.borderLeft = '10px solid hsl(140, 60%, 45%)'
-
-          priorityStatus.style.backgroundColor = 'hsl(140, 60%, 45%)';
+          priorityStatus.style.backgroundColor = "hsl(140, 60%, 45%)";
           break;
-          case 'medium':
-            todoMainDiv.style.borderLeft = '10px solid hsl(35, 85%, 55%)'
-          priorityStatus.style.backgroundColor = 'hsl(35, 85%, 55%)';
-  
-            break;
-            case 'high':
-              todoMainDiv.style.borderLeft = '10px solid hsl(0, 70%, 60%)';
-          priorityStatus.style.backgroundColor = 'hsl(0, 70%, 60%)';
-  
-              break;  
-  
+        case "medium":
+          todoMainDiv.style.borderLeft = "10px solid hsl(35, 85%, 55%)";
+          priorityStatus.style.backgroundColor = "hsl(35, 85%, 55%)";
+
+          break;
+        case "high":
+          todoMainDiv.style.borderLeft = "10px solid hsl(0, 70%, 60%)";
+          priorityStatus.style.backgroundColor = "hsl(0, 70%, 60%)";
+
+          break;
       }
     }
-    
 
-    priority.appendChild(priorityStatus)
-    priority.appendChild(priorityText)
+    priority.appendChild(priorityStatus);
+    priority.appendChild(priorityText);
     deleteSvgWrapper.appendChild(deleteSvg);
     deleteSvgWrapper.appendChild(deleteHoverSvg);
 
@@ -252,7 +250,7 @@ function createTodoDOM(items, parent) {
     todoMainDiv.appendChild(title);
     todoMainDiv.appendChild(dueDate);
     todoMainDiv.appendChild(details);
-    
+
     subContent.appendChild(projectType);
     subContent.appendChild(createdAt);
     subContent.appendChild(overdue);
@@ -287,8 +285,10 @@ function updateStatus(id) {
 
   if (taskToUpdate) {
     taskToUpdate.status = !taskToUpdate.status;
-    taskToUpdate.completedAt = taskToUpdate.status ? new Date().toISOString(): null;
-    console.log(allUserTask)
+    taskToUpdate.completedAt = taskToUpdate.status
+      ? new Date().toISOString()
+      : null;
+    console.log(allUserTask);
     setAndRefreshDisplay(allUserTask);
   }
 }
@@ -327,7 +327,7 @@ export function getAddForm() {
     let priority = formData.get("priority");
     let project = formData.get("project");
 
-    allUserTask = userTasksStorage.getStorage()
+    allUserTask = userTasksStorage.getStorage();
 
     if (id) {
       const index = allUserTask.findIndex((item) => item.uuid === id);
@@ -379,13 +379,10 @@ export function populateForm(id) {
   }
 }
 
-
 export function setAndRefreshDisplay(arr) {
   userTasksStorage.setStorage(arr);
-  allUserTask = getAllUserTask(); 
+  allUserTask = getAllUserTask();
   const view = getCurrentView();
   const list = filterByView(view, allUserTask);
   displayTodo(list);
 }
-
-
