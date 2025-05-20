@@ -387,7 +387,7 @@ svg{
   display: flex;
   /* justify-content: space-between; */
   align-items: center;
-  /* gap: 1.7rem; */
+  /* gap: .rem; */
   min-width: 500px;
   min-height: 60px;
   border: var(--border);
@@ -407,6 +407,7 @@ svg{
   border: 1px solid hsl(229 29.8% 20%) ;
   /* border: inherit; */
   font-weight: 400;
+  margin-left: 1rem;
   /* border-radius: var(--border-radius-lg); */
   transition: transform 0.2s ease-in-out;
 
@@ -521,15 +522,16 @@ svg{
   margin-bottom: .5rem;
   border-radius: 0 0 var(--border-radius-lg)  var(--border-radius-lg);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
- 
+  gap: 1rem;
+  overflow-wrap: break-word;   
+  white-space: normal; 
 
 }
 
 .sub-con{
   display: flex;
   flex-direction: column;
-  gap: .25rem;
-  
+  gap: .7rem;
   
   flex: 1;
   
